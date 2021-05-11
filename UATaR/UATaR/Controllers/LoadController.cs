@@ -10,12 +10,12 @@ using UATaR.ViewModels;
 namespace UATaR.Controllers
 {
     [Authorize(Roles = RoleNames.MethodologistDepartment)]
-    public class ExecuteLoadController : Controller
+    public class LoadController : Controller
     {
-        private const string ApiControllerName = "executeLoad";
+        private const string ApiControllerName = "load";
         private readonly IApiClientHelper _client;
 
-        public ExecuteLoadController(IApiClientHelper client)
+        public LoadController(IApiClientHelper client)
         {
             _client = client;
         }
@@ -23,80 +23,80 @@ namespace UATaR.Controllers
         [HttpGet]
         //[Authorize(Roles = RoleNames.HeadDepartment)]
         [AllowAnonymous]
-        public async Task<IActionResult> ShowExecuteLoad()
+        public async Task<IActionResult> ShowLoad()
         {
             var result = await _client.GetAsync(ApiControllerName);
-            var content = await _client.ReadAsJsonAsync<List<ExecuteLoadViewModel>>(result);
+            var content = await _client.ReadAsJsonAsync<List<LoadViewModel>>(result);
 
             return View(content);
         }
 
         [HttpGet]
-        public IActionResult CreateExecuteLoad()
+        public IActionResult CreateLoad()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public Task<IActionResult> CreateExecuteLoad(ExecuteLoadViewModel executeLoad)
+        public Task<IActionResult> CreateLoad(LoadViewModel load)
         {
             if (!ModelState.IsValid)
             {
-                return CreateExecuteLoad(executeLoad);
+                return CreateLoad(load);
             }
 
-            return CreateExecuteLoadInternal(executeLoad);
+            return CreateLoadInternal(load);
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateExecuteLoad(int id)
+        public async Task<IActionResult> UpdateLoad(int id)
         {
             var result = await _client.GetAsync($"{ApiControllerName}/{id}");
-            var data = await _client.ReadAsJsonAsync<ExecuteLoadViewModel>(result);
+            var data = await _client.ReadAsJsonAsync<LoadViewModel>(result);
 
             return View(data);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateExecuteLoad(ExecuteLoadViewModel executeLoad)
+        public async Task<IActionResult> UpdateLoad(LoadViewModel load)
         {
-            var result = await _client.PutAsync(ApiControllerName, executeLoad);
+            var result = await _client.PutAsync(ApiControllerName, load);
             if (result.StatusCode == HttpStatusCode.OK)
             {
-                return RedirectToAction(nameof(ShowExecuteLoad));
+                return RedirectToAction(nameof(ShowLoad));
             }
             else
             {
                 var exMessage = await result.Content.ReadAsStringAsync();
                 ModelState.AddModelError(string.Empty, exMessage);
 
-                return await UpdateExecuteLoad(executeLoad);
+                return await UpdateLoad(load);
             }
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeleteExecuteLoad(int id)
+        public async Task<IActionResult> DeleteLoad(int id)
         {
             await _client.DeleteAsync($"{ApiControllerName}/{id}");
 
-            return RedirectToAction(nameof(ShowExecuteLoad));
+            return RedirectToAction(nameof(ShowLoad));
         }
 
-        private async Task<IActionResult> CreateExecuteLoadInternal(ExecuteLoadViewModel executeLoad)
+        private async Task<IActionResult> CreateLoadInternal(LoadViewModel load)
         {
-            var result = await _client.PostAsync(ApiControllerName, executeLoad);
+            var result = await _client.PostAsync(ApiControllerName, load);
             if (result.StatusCode == HttpStatusCode.OK)
             {
-                return RedirectToAction(nameof(ShowExecuteLoad));
+                return RedirectToAction(nameof(ShowLoad));
             }
             else
             {
                 var exMessage = await result.Content.ReadAsStringAsync();
                 ModelState.AddModelError(string.Empty, exMessage);
 
-                return CreateExecuteLoad();
+                return CreateLoad();
             }
         }
     }

@@ -10,12 +10,12 @@ using UATaR.ViewModels;
 namespace UATaR.Controllers
 {
     [Authorize(Roles = RoleNames.MethodologistDepartment)]
-    public class ExecuteLoadController : Controller
+    public class SubjectController : Controller
     {
-        private const string ApiControllerName = "executeLoad";
+        private const string ApiControllerName = "subject";
         private readonly IApiClientHelper _client;
 
-        public ExecuteLoadController(IApiClientHelper client)
+        public SubjectController(IApiClientHelper client)
         {
             _client = client;
         }
@@ -23,80 +23,80 @@ namespace UATaR.Controllers
         [HttpGet]
         //[Authorize(Roles = RoleNames.HeadDepartment)]
         [AllowAnonymous]
-        public async Task<IActionResult> ShowExecuteLoad()
+        public async Task<IActionResult> ShowSubject()
         {
             var result = await _client.GetAsync(ApiControllerName);
-            var content = await _client.ReadAsJsonAsync<List<ExecuteLoadViewModel>>(result);
+            var content = await _client.ReadAsJsonAsync<List<SubjectViewModel>>(result);
 
             return View(content);
         }
 
         [HttpGet]
-        public IActionResult CreateExecuteLoad()
+        public IActionResult CreateSubject()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public Task<IActionResult> CreateExecuteLoad(ExecuteLoadViewModel executeLoad)
+        public Task<IActionResult> CreateSubject(SubjectViewModel subject)
         {
             if (!ModelState.IsValid)
             {
-                return CreateExecuteLoad(executeLoad);
+                return CreateSubject(subject);
             }
 
-            return CreateExecuteLoadInternal(executeLoad);
+            return CreateSubjectInternal(subject);
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateExecuteLoad(int id)
+        public async Task<IActionResult> UpdateSubject(int id)
         {
             var result = await _client.GetAsync($"{ApiControllerName}/{id}");
-            var data = await _client.ReadAsJsonAsync<ExecuteLoadViewModel>(result);
+            var data = await _client.ReadAsJsonAsync<SubjectViewModel>(result);
 
             return View(data);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateExecuteLoad(ExecuteLoadViewModel executeLoad)
+        public async Task<IActionResult> UpdateSubject(SubjectViewModel subject)
         {
-            var result = await _client.PutAsync(ApiControllerName, executeLoad);
+            var result = await _client.PutAsync(ApiControllerName, subject);
             if (result.StatusCode == HttpStatusCode.OK)
             {
-                return RedirectToAction(nameof(ShowExecuteLoad));
+                return RedirectToAction(nameof(ShowSubject));
             }
             else
             {
                 var exMessage = await result.Content.ReadAsStringAsync();
                 ModelState.AddModelError(string.Empty, exMessage);
 
-                return await UpdateExecuteLoad(executeLoad);
+                return await UpdateSubject(subject);
             }
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeleteExecuteLoad(int id)
+        public async Task<IActionResult> DeleteSubject(int id)
         {
             await _client.DeleteAsync($"{ApiControllerName}/{id}");
 
-            return RedirectToAction(nameof(ShowExecuteLoad));
+            return RedirectToAction(nameof(ShowSubject));
         }
 
-        private async Task<IActionResult> CreateExecuteLoadInternal(ExecuteLoadViewModel executeLoad)
+        private async Task<IActionResult> CreateSubjectInternal(SubjectViewModel subject)
         {
-            var result = await _client.PostAsync(ApiControllerName, executeLoad);
+            var result = await _client.PostAsync(ApiControllerName, subject);
             if (result.StatusCode == HttpStatusCode.OK)
             {
-                return RedirectToAction(nameof(ShowExecuteLoad));
+                return RedirectToAction(nameof(ShowSubject));
             }
             else
             {
                 var exMessage = await result.Content.ReadAsStringAsync();
                 ModelState.AddModelError(string.Empty, exMessage);
 
-                return CreateExecuteLoad();
+                return CreateSubject();
             }
         }
     }

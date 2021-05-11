@@ -1,19 +1,27 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using DataAccessLayer.DTO;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
+using UATaR.Core;
 
 namespace UATaR
 {
-    public class Program
+    public static class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+            using var scope = host.Services.CreateScope();
+
+            var services = scope.ServiceProvider;
+            var userManager = services.GetRequiredService<UserManager<UserDto>>();
+            var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+            await DbInitializer.InitializeAsync(userManager, rolesManager);
+
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

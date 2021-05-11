@@ -10,12 +10,12 @@ using UATaR.ViewModels;
 namespace UATaR.Controllers
 {
     [Authorize(Roles = RoleNames.MethodologistDepartment)]
-    public class ExecuteLoadController : Controller
+    public class TeacherController : Controller
     {
-        private const string ApiControllerName = "executeLoad";
+        private const string ApiControllerName = "teacher";
         private readonly IApiClientHelper _client;
 
-        public ExecuteLoadController(IApiClientHelper client)
+        public TeacherController(IApiClientHelper client)
         {
             _client = client;
         }
@@ -23,80 +23,80 @@ namespace UATaR.Controllers
         [HttpGet]
         //[Authorize(Roles = RoleNames.HeadDepartment)]
         [AllowAnonymous]
-        public async Task<IActionResult> ShowExecuteLoad()
+        public async Task<IActionResult> ShowTeacher()
         {
             var result = await _client.GetAsync(ApiControllerName);
-            var content = await _client.ReadAsJsonAsync<List<ExecuteLoadViewModel>>(result);
+            var content = await _client.ReadAsJsonAsync<List<TeacherViewModel>>(result);
 
             return View(content);
         }
 
         [HttpGet]
-        public IActionResult CreateExecuteLoad()
+        public IActionResult CreateTeacher()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public Task<IActionResult> CreateExecuteLoad(ExecuteLoadViewModel executeLoad)
+        public Task<IActionResult> CreateTeacher(TeacherViewModel teacher)
         {
             if (!ModelState.IsValid)
             {
-                return CreateExecuteLoad(executeLoad);
+                return CreateTeacher(teacher);
             }
 
-            return CreateExecuteLoadInternal(executeLoad);
+            return CreateTeacherInternal(teacher);
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateExecuteLoad(int id)
+        public async Task<IActionResult> UpdateTeacher(int id)
         {
             var result = await _client.GetAsync($"{ApiControllerName}/{id}");
-            var data = await _client.ReadAsJsonAsync<ExecuteLoadViewModel>(result);
+            var data = await _client.ReadAsJsonAsync<TeacherViewModel>(result);
 
             return View(data);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateExecuteLoad(ExecuteLoadViewModel executeLoad)
+        public async Task<IActionResult> UpdateTeacher(TeacherViewModel teacher)
         {
-            var result = await _client.PutAsync(ApiControllerName, executeLoad);
+            var result = await _client.PutAsync(ApiControllerName, teacher);
             if (result.StatusCode == HttpStatusCode.OK)
             {
-                return RedirectToAction(nameof(ShowExecuteLoad));
+                return RedirectToAction(nameof(ShowTeacher));
             }
             else
             {
                 var exMessage = await result.Content.ReadAsStringAsync();
                 ModelState.AddModelError(string.Empty, exMessage);
 
-                return await UpdateExecuteLoad(executeLoad);
+                return await UpdateTeacher(teacher);
             }
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeleteExecuteLoad(int id)
+        public async Task<IActionResult> DeleteTeacher(int id)
         {
             await _client.DeleteAsync($"{ApiControllerName}/{id}");
 
-            return RedirectToAction(nameof(ShowExecuteLoad));
+            return RedirectToAction(nameof(ShowTeacher));
         }
 
-        private async Task<IActionResult> CreateExecuteLoadInternal(ExecuteLoadViewModel executeLoad)
+        private async Task<IActionResult> CreateTeacherInternal(TeacherViewModel teacher)
         {
-            var result = await _client.PostAsync(ApiControllerName, executeLoad);
+            var result = await _client.PostAsync(ApiControllerName, teacher);
             if (result.StatusCode == HttpStatusCode.OK)
             {
-                return RedirectToAction(nameof(ShowExecuteLoad));
+                return RedirectToAction(nameof(ShowTeacher));
             }
             else
             {
                 var exMessage = await result.Content.ReadAsStringAsync();
                 ModelState.AddModelError(string.Empty, exMessage);
 
-                return CreateExecuteLoad();
+                return CreateTeacher();
             }
         }
     }

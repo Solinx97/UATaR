@@ -12,47 +12,47 @@ namespace UATaRApi.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class ExecuteLoadController : Controller
+    public class TeacherController : Controller
     {
-        private readonly IService<ExecuteLoad, int> _executeLoadService;
+        private readonly IService<Teacher, int> _teacherService;
         private readonly IMapper _mapper;
-        private readonly ILogger<ExecuteLoadController> _logger;
+        private readonly ILogger<TeacherController> _logger;
 
-        public ExecuteLoadController(IService<ExecuteLoad, int> executeLoadService,
+        public TeacherController(IService<Teacher, int> teacherService,
             IMapper mapper,
-            ILogger<ExecuteLoadController> logger)
+            ILogger<TeacherController> logger)
         {
-            _executeLoadService = executeLoadService;
+            _teacherService = teacherService;
             _mapper = mapper;
             _logger = logger;
         }
 
         [HttpGet]
-        public async Task<IActionResult> ShowExecuteLoad()
+        public async Task<IActionResult> ShowTeacher()
         {
             try
             {
-                var data = await _executeLoadService.GetAllAsync();
-                var map = _mapper.Map<List<ExecuteLoadViewModel>>(data);
+                var data = await _teacherService.GetAllAsync();
+                var map = _mapper.Map<List<TeacherViewModel>>(data);
 
                 return Ok(map);
             }
             catch (NotFoundException ex)
             {
                 _logger.LogError(ex.Message);
-                var data = new List<ExecuteLoadViewModel>();
+                var data = new List<TeacherViewModel>();
 
                 return Ok(data);
             }
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetExecuteLoad(int id)
+        public async Task<IActionResult> GetTeacher(int id)
         {
             try
             {
-                var data = await _executeLoadService.GetByIdAsync(id);
-                var map = _mapper.Map<ExecuteLoadViewModel>(data);
+                var data = await _teacherService.GetByIdAsync(id);
+                var map = _mapper.Map<TeacherViewModel>(data);
 
                 return Ok(map);
             }
@@ -65,12 +65,12 @@ namespace UATaRApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateExecuteLoad(ExecuteLoadViewModel executeLoad)
+        public async Task<IActionResult> CreateTeacher(TeacherViewModel teacher)
         {
             try
             {
-                var map = _mapper.Map<ExecuteLoad>(executeLoad);
-                await _executeLoadService.CreateAsync(map);
+                var map = _mapper.Map<Teacher>(teacher);
+                await _teacherService.CreateAsync(map);
 
                 return Ok();
             }
@@ -83,12 +83,12 @@ namespace UATaRApi.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateExecuteLoad(ExecuteLoadViewModel executeLoad)
+        public async Task<IActionResult> UpdateTeacher(TeacherViewModel teacher)
         {
             try
             {
-                var map = _mapper.Map<ExecuteLoad>(executeLoad);
-                await _executeLoadService.UpdateAsync(map);
+                var map = _mapper.Map<Teacher>(teacher);
+                await _teacherService.UpdateAsync(map);
 
                 return Ok();
             }
@@ -101,11 +101,11 @@ namespace UATaRApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteExecuteLoad(int id)
+        public async Task<IActionResult> DeleteTeacher(int id)
         {
-            var data = await _executeLoadService.GetByIdAsync(id);
-            var map = _mapper.Map<ExecuteLoad>(data);
-            await _executeLoadService.DeleteAsync(map);
+            var map = await _teacherService.GetByIdAsync(id);
+            var data = _mapper.Map<Teacher>(map);
+            await _teacherService.DeleteAsync(data);
 
             return Ok();
         }

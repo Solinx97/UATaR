@@ -59,7 +59,7 @@ namespace UATaR
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Accounts}/{action=Login}/{id?}");
+                    pattern: "{controller=ExecuteLoad}/{action=ShowExecuteLoad}/{id?}");
             });
         }
     }

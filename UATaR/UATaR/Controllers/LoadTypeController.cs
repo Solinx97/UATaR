@@ -10,12 +10,12 @@ using UATaR.ViewModels;
 namespace UATaR.Controllers
 {
     [Authorize(Roles = RoleNames.MethodologistDepartment)]
-    public class ExecuteLoadController : Controller
+    public class LoadTypeController : Controller
     {
-        private const string ApiControllerName = "executeLoad";
+        private const string ApiControllerName = "loadType";
         private readonly IApiClientHelper _client;
 
-        public ExecuteLoadController(IApiClientHelper client)
+        public LoadTypeController(IApiClientHelper client)
         {
             _client = client;
         }
@@ -23,80 +23,80 @@ namespace UATaR.Controllers
         [HttpGet]
         //[Authorize(Roles = RoleNames.HeadDepartment)]
         [AllowAnonymous]
-        public async Task<IActionResult> ShowExecuteLoad()
+        public async Task<IActionResult> ShowLoadType()
         {
             var result = await _client.GetAsync(ApiControllerName);
-            var content = await _client.ReadAsJsonAsync<List<ExecuteLoadViewModel>>(result);
+            var content = await _client.ReadAsJsonAsync<List<LoadTypeViewModel>>(result);
 
             return View(content);
         }
 
         [HttpGet]
-        public IActionResult CreateExecuteLoad()
+        public IActionResult CreateLoadType()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public Task<IActionResult> CreateExecuteLoad(ExecuteLoadViewModel executeLoad)
+        public Task<IActionResult> CreateLoadType(LoadTypeViewModel loadType)
         {
             if (!ModelState.IsValid)
             {
-                return CreateExecuteLoad(executeLoad);
+                return CreateLoadType(loadType);
             }
 
-            return CreateExecuteLoadInternal(executeLoad);
+            return CreateLoadTypeInternal(loadType);
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateExecuteLoad(int id)
+        public async Task<IActionResult> UpdateLoadType(int id)
         {
             var result = await _client.GetAsync($"{ApiControllerName}/{id}");
-            var data = await _client.ReadAsJsonAsync<ExecuteLoadViewModel>(result);
+            var data = await _client.ReadAsJsonAsync<LoadTypeViewModel>(result);
 
             return View(data);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateExecuteLoad(ExecuteLoadViewModel executeLoad)
+        public async Task<IActionResult> UpdateLoadType(LoadTypeViewModel loadType)
         {
-            var result = await _client.PutAsync(ApiControllerName, executeLoad);
+            var result = await _client.PutAsync(ApiControllerName, loadType);
             if (result.StatusCode == HttpStatusCode.OK)
             {
-                return RedirectToAction(nameof(ShowExecuteLoad));
+                return RedirectToAction(nameof(ShowLoadType));
             }
             else
             {
                 var exMessage = await result.Content.ReadAsStringAsync();
                 ModelState.AddModelError(string.Empty, exMessage);
 
-                return await UpdateExecuteLoad(executeLoad);
+                return await UpdateLoadType(loadType);
             }
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeleteExecuteLoad(int id)
+        public async Task<IActionResult> DeleteLoadType(int id)
         {
             await _client.DeleteAsync($"{ApiControllerName}/{id}");
 
-            return RedirectToAction(nameof(ShowExecuteLoad));
+            return RedirectToAction(nameof(ShowLoadType));
         }
 
-        private async Task<IActionResult> CreateExecuteLoadInternal(ExecuteLoadViewModel executeLoad)
+        private async Task<IActionResult> CreateLoadTypeInternal(LoadTypeViewModel loadType)
         {
-            var result = await _client.PostAsync(ApiControllerName, executeLoad);
+            var result = await _client.PostAsync(ApiControllerName, loadType);
             if (result.StatusCode == HttpStatusCode.OK)
             {
-                return RedirectToAction(nameof(ShowExecuteLoad));
+                return RedirectToAction(nameof(ShowLoadType));
             }
             else
             {
                 var exMessage = await result.Content.ReadAsStringAsync();
                 ModelState.AddModelError(string.Empty, exMessage);
 
-                return CreateExecuteLoad();
+                return CreateLoadType();
             }
         }
     }

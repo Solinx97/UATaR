@@ -1,7 +1,49 @@
-﻿
+﻿@model List<TeacherViewModel>
+
 @{
-    ViewData["Title"] = "ShowTeacher";
+    ViewData["Title"] = "Преподаватели";
 }
 
-<h1>ShowTeacher</h1>
-
+<div class="flex-row__space-between" style="margin: 1vw;">
+    <h5>Преподаватели</h5>
+    @if (User.Identity.IsAuthenticated && User.IsInRole(RoleNames.MethodologistDepartment))
+    {
+        <form method="get" asp-action="CreateTeacher" asp-controller="Teacher" asp-antiforgery="false">
+            <input type="submit" class="btn btn-success" value="Создать" />
+        </form>
+    }
+</div>
+<ul style="margin: 2vw;" class="flex-row__space-between">
+    @foreach (var item in Model)
+    {
+        <li>
+            <div class="card" style="width: 25vw; margin: 2vw;">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item flex-row__space-between">
+                        <div class="alert alert-success" role="alert">FullName</div>
+                        <div class="alert alert-light" role="alert">@item.FullName</div>
+                    </li>
+                    <li class="list-group-item flex-row__space-between">
+                        <div class="alert alert-success" role="alert">Position</div>
+                        <div class="alert alert-light" role="alert">@item.Position</div>
+                    </li>
+                    <li class="list-group-item flex-row__space-between">
+                        <div class="alert alert-success" role="alert">Education</div>
+                        <div class="alert alert-light" role="alert">@item.Education</div>
+                    </li>
+                    <li class="list-group-item flex-row__space-between">
+                        <div class="alert alert-success" role="alert">Birthday</div>
+                        <div class="alert alert-light" role="alert">@item.Birthday</div>
+                    </li>
+                </ul>
+                @if (User.Identity.IsAuthenticated && User.IsInRole(RoleNames.MethodologistDepartment))
+                {
+                    <div class="card-body flex-row__space-between">
+                        @FormHelper.CreateForm(Html, "btn btn-success", "Teacher", "UpdateTeacher", "Редактировтаь", @item.Id.ToString())
+                        @FormHelper.CreateForm(Html, "btn btn-warning", "Teacher", "DeleteTeacher", "Удалить", @item.Id.ToString())
+                    </div>
+                }
+            </div>
+        </li>
+    }
+</ul>

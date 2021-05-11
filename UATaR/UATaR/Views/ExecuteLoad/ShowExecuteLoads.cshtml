@@ -6,7 +6,6 @@
 
 <div class="flex-row__space-between" style="margin: 1vw;">
     <h5>Выполненые нагрузки</h5>
-    @*<display-current-date></display-current-date>*@
     @if (User.Identity.IsAuthenticated && User.IsInRole(RoleNames.MethodologistDepartment))
     {
         <form method="get" asp-action="CreateExecuteLoad" asp-controller="ExecuteLoad" asp-antiforgery="false">
@@ -25,19 +24,19 @@
                         <div class="alert alert-light" role="alert">@item.DateExecute</div>
                     </li>
                     <li class="list-group-item flex-row__space-between">
-                        <div class="alert alert-success" role="alert">Surname</div>
+                        <div class="alert alert-success" role="alert">Is full executed</div>
                         <div class="alert alert-light" role="alert">@item.IsFullExecuted</div>
                     </li>
+                    @await Component.InvokeAsync("GetLoadById", new { id = item.LoadId })
                 </ul>
                 @if (User.Identity.IsAuthenticated && User.IsInRole(RoleNames.MethodologistDepartment))
                 {
                     <div class="card-body flex-row__space-between">
-                        @FormHelper.CreateForm(Html, "ExecuteLoad", "UpdateExecuteLoad", "Редактировтаь", @item.Id.ToString())
-                        @FormHelper.CreateForm(Html, "DeleteExecuteLoad", "DeleteDriver", "Удалить", @item.Id.ToString())
+                        @FormHelper.CreateForm(Html, "btn btn-success", "ExecuteLoad", "UpdateExecuteLoad", "Редактировтаь", @item.Id.ToString())
+                        @FormHelper.CreateForm(Html, "btn btn-warning", "ExecuteLoad", "DeleteExecuteLoad", "Удалить", @item.Id.ToString())
                     </div>
                 }
             </div>
         </li>
     }
 </ul>
-

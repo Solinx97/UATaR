@@ -1,7 +1,40 @@
-﻿
+﻿@model SubjectViewModel
+
 @{
-    ViewData["Title"] = "UpdateSubject";
+    ViewData["Title"] = "Обновление предмета";
 }
 
-<h1>UpdateSubject</h1>
+<div class="flex-row__space-between">
+    <h5 style="margin: 2vw;">Обновление предмета</h5>
+</div>
+<div style="width: 30vw; margin: 3vw;">
+    <div class="form-group">
+        <form asp-action="UpdateSubject" asp-controller="Subject" asp-antiforgery="true">
+            <div>
+                <div class="validation" asp-validation-summary="ModelOnly" />
+                <div class="flex-column">
+                    <div>
+                        <label asp-for="Name"></label>
+                        <input class="form-control" type="text" asp-for="Name" />
+                    </div>
+                    <span asp-validation-for="Name" />
+                </div>
+                <div class="flex-column">
+                    <div>
+                        <label asp-for="Facility"></label>
+                        <input class="form-control" type="text" asp-for="Facility" />
+                    </div>
+                    <span asp-validation-for="Facility" />
+                </div>
+                <input type="submit" class="btn btn-success" style="margin: 1vw;" value="Обновить" />
+            </div>
+        </form>
+        <form method="get" asp-action="ShowSubjects" asp-controller="Subject" asp-antiforgery="false">
+            <input type="submit" class="btn btn-secondary" style="margin: 1vw;" value="Отмена" />
+        </form>
+    </div>
+</div>
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

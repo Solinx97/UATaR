@@ -6,7 +6,7 @@ namespace UATaR.Helpers
 {
     public static class FormHelper
     {
-        public static HtmlString CreateForm(this IHtmlHelper html, string controllerName, string actionName, string inputName, string id)
+        public static HtmlString CreateForm(this IHtmlHelper html, string buttonClass, string controllerName, string actionName, string inputName, string id)
         {
             var form = new TagBuilder("form");
             form.Attributes.Add("action", $"/{controllerName}/{actionName}/");
@@ -20,7 +20,7 @@ namespace UATaR.Helpers
 
             input = new TagBuilder("input");
             input.Attributes.Add("type", "submit");
-            input.Attributes.Add("class", "btn btn-success");
+            input.Attributes.Add("class", buttonClass);
             input.Attributes.Add("value", inputName);
             form.InnerHtml.AppendHtml(input);
 

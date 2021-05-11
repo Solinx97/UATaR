@@ -21,6 +21,7 @@ namespace UATaR.ViewModels
 
         [Display(Name = "Birthday")]
         [Required(ErrorMessage = "Required first name")]
+        [DataType(DataType.Date)]
         public DateTimeOffset Birthday { get; set; }
     }
 }

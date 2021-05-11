@@ -111,7 +111,7 @@ namespace UATaR.Controllers
             var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
             if (result.Succeeded)
             {
-                return RedirectToAction("ShowExecuteLoads", "ExecuteLoad");
+                return RedirectToAction("ShowLoadTypes", "LoadType");
             }
             else
             {

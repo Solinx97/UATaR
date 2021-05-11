@@ -54,7 +54,7 @@ namespace UATaR.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Login(model);
+                return Task.Run(Login);
             }
 
             return LoginInternal(model);
@@ -111,7 +111,7 @@ namespace UATaR.Controllers
             var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
             if (result.Succeeded)
             {
-                return RedirectToAction("ShowDrivers", "Drivers");
+                return RedirectToAction("ShowExecuteLoads", "ExecuteLoad");
             }
             else
             {

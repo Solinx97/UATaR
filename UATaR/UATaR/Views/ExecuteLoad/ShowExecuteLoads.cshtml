@@ -1,0 +1,43 @@
+﻿@model List<ExecuteLoadViewModel>
+
+@{
+    ViewData["Title"] = "Выполнение нагрузки";
+}
+
+<div class="flex-row__space-between" style="margin: 1vw;">
+    <h5>Выполненые нагрузки</h5>
+    @*<display-current-date></display-current-date>*@
+    @if (User.Identity.IsAuthenticated && User.IsInRole(RoleNames.MethodologistDepartment))
+    {
+        <form method="get" asp-action="CreateExecuteLoad" asp-controller="ExecuteLoad" asp-antiforgery="false">
+            <input type="submit" class="btn btn-success" value="Создать" />
+        </form>
+    }
+</div>
+<ul style="margin: 2vw;" class="flex-row__space-between">
+    @foreach (var item in Model)
+    {
+        <li>
+            <div class="card" style="width: 25vw; margin: 2vw;">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item flex-row__space-between">
+                        <div class="alert alert-success" role="alert">First name</div>
+                        <div class="alert alert-light" role="alert">@item.DateExecute</div>
+                    </li>
+                    <li class="list-group-item flex-row__space-between">
+                        <div class="alert alert-success" role="alert">Surname</div>
+                        <div class="alert alert-light" role="alert">@item.IsFullExecuted</div>
+                    </li>
+                </ul>
+                @if (User.Identity.IsAuthenticated && User.IsInRole(RoleNames.MethodologistDepartment))
+                {
+                    <div class="card-body flex-row__space-between">
+                        @FormHelper.CreateForm(Html, "ExecuteLoad", "UpdateExecuteLoad", "Редактировтаь", @item.Id.ToString())
+                        @FormHelper.CreateForm(Html, "DeleteExecuteLoad", "DeleteDriver", "Удалить", @item.Id.ToString())
+                    </div>
+                }
+            </div>
+        </li>
+    }
+</ul>
+

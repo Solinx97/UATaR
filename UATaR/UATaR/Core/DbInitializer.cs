@@ -39,16 +39,16 @@ namespace UATaR.Core
 
         private static async Task InitialProfils(UserManager<UserDto> userManager)
         {
-            string userName = "Solinx";
-            string password = "_1User2";
+            string userName = "Methodologist";
+            string password = "_1Methodologist2_";
 
             if (await userManager.FindByNameAsync(userName) is null)
             {
                 var user = new UserDto
                 {
-                    FirstName = "Oleg",
-                    Surname = "Fedosov",
-                    Patronic = "Vasilyevich",
+                    FirstName = "Ольга",
+                    Surname = "Вельморна",
+                    Patronic = "Сергеевна",
                     UserName = userName,
                 };
                 var result = await userManager.CreateAsync(user, password);
@@ -59,16 +59,16 @@ namespace UATaR.Core
                 }
             }
 
-            userName = "MainUser";
-            password = "7_Event_14";
+            userName = "HeadDepartment";
+            password = "-1HeadDepartment2-";
 
             if (await userManager.FindByNameAsync(userName) is null)
             {
                 var user = new UserDto
                 {
-                    FirstName = "Dima",
-                    Surname = "Gobalov",
-                    Patronic = "Grabovich",
+                    FirstName = "Татьяна",
+                    Surname = "Трохова",
+                    Patronic = "Анатольевна",
                     UserName = userName,
                 };
                 var result = await userManager.CreateAsync(user, password);

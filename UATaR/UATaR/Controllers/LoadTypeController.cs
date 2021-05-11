@@ -23,7 +23,7 @@ namespace UATaR.Controllers
         [HttpGet]
         //[Authorize(Roles = RoleNames.HeadDepartment)]
         [AllowAnonymous]
-        public async Task<IActionResult> ShowLoadType()
+        public async Task<IActionResult> ShowLoadTypes()
         {
             var result = await _client.GetAsync(ApiControllerName);
             var content = await _client.ReadAsJsonAsync<List<LoadTypeViewModel>>(result);
@@ -65,7 +65,7 @@ namespace UATaR.Controllers
             var result = await _client.PutAsync(ApiControllerName, loadType);
             if (result.StatusCode == HttpStatusCode.OK)
             {
-                return RedirectToAction(nameof(ShowLoadType));
+                return RedirectToAction(nameof(ShowLoadTypes));
             }
             else
             {
@@ -81,7 +81,7 @@ namespace UATaR.Controllers
         {
             await _client.DeleteAsync($"{ApiControllerName}/{id}");
 
-            return RedirectToAction(nameof(ShowLoadType));
+            return RedirectToAction(nameof(ShowLoadTypes));
         }
 
         private async Task<IActionResult> CreateLoadTypeInternal(LoadTypeViewModel loadType)
@@ -89,7 +89,7 @@ namespace UATaR.Controllers
             var result = await _client.PostAsync(ApiControllerName, loadType);
             if (result.StatusCode == HttpStatusCode.OK)
             {
-                return RedirectToAction(nameof(ShowLoadType));
+                return RedirectToAction(nameof(ShowLoadTypes));
             }
             else
             {

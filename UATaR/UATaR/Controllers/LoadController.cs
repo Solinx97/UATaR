@@ -23,7 +23,7 @@ namespace UATaR.Controllers
         [HttpGet]
         //[Authorize(Roles = RoleNames.HeadDepartment)]
         [AllowAnonymous]
-        public async Task<IActionResult> ShowLoad()
+        public async Task<IActionResult> ShowLoads()
         {
             var result = await _client.GetAsync(ApiControllerName);
             var content = await _client.ReadAsJsonAsync<List<LoadViewModel>>(result);
@@ -65,7 +65,7 @@ namespace UATaR.Controllers
             var result = await _client.PutAsync(ApiControllerName, load);
             if (result.StatusCode == HttpStatusCode.OK)
             {
-                return RedirectToAction(nameof(ShowLoad));
+                return RedirectToAction(nameof(ShowLoads));
             }
             else
             {
@@ -81,7 +81,7 @@ namespace UATaR.Controllers
         {
             await _client.DeleteAsync($"{ApiControllerName}/{id}");
 
-            return RedirectToAction(nameof(ShowLoad));
+            return RedirectToAction(nameof(ShowLoads));
         }
 
         private async Task<IActionResult> CreateLoadInternal(LoadViewModel load)
@@ -89,7 +89,7 @@ namespace UATaR.Controllers
             var result = await _client.PostAsync(ApiControllerName, load);
             if (result.StatusCode == HttpStatusCode.OK)
             {
-                return RedirectToAction(nameof(ShowLoad));
+                return RedirectToAction(nameof(ShowLoads));
             }
             else
             {

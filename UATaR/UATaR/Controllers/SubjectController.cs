@@ -23,7 +23,7 @@ namespace UATaR.Controllers
         [HttpGet]
         //[Authorize(Roles = RoleNames.HeadDepartment)]
         [AllowAnonymous]
-        public async Task<IActionResult> ShowSubject()
+        public async Task<IActionResult> ShowSubjects()
         {
             var result = await _client.GetAsync(ApiControllerName);
             var content = await _client.ReadAsJsonAsync<List<SubjectViewModel>>(result);
@@ -65,7 +65,7 @@ namespace UATaR.Controllers
             var result = await _client.PutAsync(ApiControllerName, subject);
             if (result.StatusCode == HttpStatusCode.OK)
             {
-                return RedirectToAction(nameof(ShowSubject));
+                return RedirectToAction(nameof(ShowSubjects));
             }
             else
             {
@@ -81,7 +81,7 @@ namespace UATaR.Controllers
         {
             await _client.DeleteAsync($"{ApiControllerName}/{id}");
 
-            return RedirectToAction(nameof(ShowSubject));
+            return RedirectToAction(nameof(ShowSubjects));
         }
 
         private async Task<IActionResult> CreateSubjectInternal(SubjectViewModel subject)
@@ -89,7 +89,7 @@ namespace UATaR.Controllers
             var result = await _client.PostAsync(ApiControllerName, subject);
             if (result.StatusCode == HttpStatusCode.OK)
             {
-                return RedirectToAction(nameof(ShowSubject));
+                return RedirectToAction(nameof(ShowSubjects));
             }
             else
             {

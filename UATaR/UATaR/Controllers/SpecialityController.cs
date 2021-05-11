@@ -23,7 +23,7 @@ namespace UATaR.Controllers
         [HttpGet]
         //[Authorize(Roles = RoleNames.HeadDepartment)]
         [AllowAnonymous]
-        public async Task<IActionResult> ShowSpeciality()
+        public async Task<IActionResult> ShowSpecialities()
         {
             var result = await _client.GetAsync(ApiControllerName);
             var content = await _client.ReadAsJsonAsync<List<SpecialityViewModel>>(result);
@@ -65,7 +65,7 @@ namespace UATaR.Controllers
             var result = await _client.PutAsync(ApiControllerName, speciality);
             if (result.StatusCode == HttpStatusCode.OK)
             {
-                return RedirectToAction(nameof(ShowSpeciality));
+                return RedirectToAction(nameof(ShowSpecialities));
             }
             else
             {
@@ -81,7 +81,7 @@ namespace UATaR.Controllers
         {
             await _client.DeleteAsync($"{ApiControllerName}/{id}");
 
-            return RedirectToAction(nameof(ShowSpeciality));
+            return RedirectToAction(nameof(ShowSpecialities));
         }
 
         private async Task<IActionResult> CreateSpecialityInternal(SpecialityViewModel speciality)
@@ -89,7 +89,7 @@ namespace UATaR.Controllers
             var result = await _client.PostAsync(ApiControllerName, speciality);
             if (result.StatusCode == HttpStatusCode.OK)
             {
-                return RedirectToAction(nameof(ShowSpeciality));
+                return RedirectToAction(nameof(ShowSpecialities));
             }
             else
             {

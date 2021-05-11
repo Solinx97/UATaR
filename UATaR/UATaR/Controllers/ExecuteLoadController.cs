@@ -23,7 +23,7 @@ namespace UATaR.Controllers
         [HttpGet]
         //[Authorize(Roles = RoleNames.HeadDepartment)]
         [AllowAnonymous]
-        public async Task<IActionResult> ShowExecuteLoad()
+        public async Task<IActionResult> ShowExecuteLoads()
         {
             var result = await _client.GetAsync(ApiControllerName);
             var content = await _client.ReadAsJsonAsync<List<ExecuteLoadViewModel>>(result);
@@ -65,7 +65,7 @@ namespace UATaR.Controllers
             var result = await _client.PutAsync(ApiControllerName, executeLoad);
             if (result.StatusCode == HttpStatusCode.OK)
             {
-                return RedirectToAction(nameof(ShowExecuteLoad));
+                return RedirectToAction(nameof(ShowExecuteLoads));
             }
             else
             {
@@ -81,7 +81,7 @@ namespace UATaR.Controllers
         {
             await _client.DeleteAsync($"{ApiControllerName}/{id}");
 
-            return RedirectToAction(nameof(ShowExecuteLoad));
+            return RedirectToAction(nameof(ShowExecuteLoads));
         }
 
         private async Task<IActionResult> CreateExecuteLoadInternal(ExecuteLoadViewModel executeLoad)
@@ -89,7 +89,7 @@ namespace UATaR.Controllers
             var result = await _client.PostAsync(ApiControllerName, executeLoad);
             if (result.StatusCode == HttpStatusCode.OK)
             {
-                return RedirectToAction(nameof(ShowExecuteLoad));
+                return RedirectToAction(nameof(ShowExecuteLoads));
             }
             else
             {

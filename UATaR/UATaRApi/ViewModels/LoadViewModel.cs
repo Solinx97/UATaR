@@ -8,8 +8,10 @@
 
         public int SubjectId { get; set; }
 
+        public int GroupId { get; set; }
+
         public int LoadTypeId { get; set; }
 
-        public string Description { get; set; }
+        public double Hours { get; set; }
     }
 }

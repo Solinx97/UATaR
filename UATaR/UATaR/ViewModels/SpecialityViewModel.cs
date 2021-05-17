@@ -6,15 +6,11 @@ namespace UATaR.ViewModels
     {
         public int Id { get; set; }
 
-        [Display(Name = "Name")]
+        [Display(Name = "Специальность")]
         [Required(ErrorMessage = "Required first name")]
         public string Name { get; set; }
 
-        [Display(Name = "Facility")]
-        [Required(ErrorMessage = "Required first name")]
-        public string Facility { get; set; }
-
-        [Display(Name = "Chair")]
+        [Display(Name = "Кафедра")]
         [Required(ErrorMessage = "Required first name")]
         public string Chair { get; set; }
     }

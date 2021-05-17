@@ -4,27 +4,27 @@ namespace UATaR.ViewModels
 {
     public class UserRegistrationViewModel
     {
-        [Display(Name = "User name")]
+        [Display(Name = "Имя пользователя")]
         [Required(ErrorMessage = "Required user name")]
         public string UserName { get; set; }
 
-        [Display(Name = "First name")]
+        [Display(Name = "Имя")]
         [Required(ErrorMessage = "Required first name")]
         public string FirstName { get; set; }
 
-        [Display(Name = "Surname")]
+        [Display(Name = "Фамилия")]
         [Required(ErrorMessage = "Required surname")]
         public string Surname { get; set; }
 
-        [Display(Name = "Patronic")]
+        [Display(Name = "Отчество")]
         [Required(ErrorMessage = "Required patronic")]
         public string Patronic { get; set; }
 
-        [Display(Name = "Password")]
+        [Display(Name = "Пароль")]
         [Required(ErrorMessage = "Required password")]
         public string Password { get; set; }
 
-        [Display(Name = "Confirm password")]
+        [Display(Name = "Подтверждение пароля")]
         [Required(ErrorMessage = "Required confirm password")]
         public string ConfirmPassword { get; set; }
     }

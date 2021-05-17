@@ -79,9 +79,9 @@ namespace BusinessLayer.Services
 
         private async Task<int> CreateInternalAsync(ExecuteLoad item)
         {
-            if (item.Date > DateTimeOffset.Now)
+            if (item.Hours <= 0)
             {
-                throw new DateException("Date of execute can't be in the future tense", nameof(item.Date));
+                throw new ArgumentOutOfRangeException(nameof(item.Hours), "Hours don't be zero or negative");
             }
 
             await _executeLoadRepository.CreateAsync(_mapper.Map<ExecuteLoadDto>(item));
@@ -111,9 +111,9 @@ namespace BusinessLayer.Services
                 throw new NotFoundException($"Collection entity {nameof(ExecuteLoad)} not found", nameof(allData));
             }
 
-            if (item.Date > DateTimeOffset.Now)
+            if (item.Hours <= 0)
             {
-                throw new DateException("Date of execute can't be in the feature", nameof(item));
+                throw new ArgumentOutOfRangeException(nameof(item.Hours), "Hours don't be zero or negative");
             }
 
             await _executeLoadRepository.UpdateAsync(_mapper.Map<ExecuteLoadDto>(item));

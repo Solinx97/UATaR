@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DataAccessLayer.DTO
+﻿namespace DataAccessLayer.DTO
 {
     public class ExecuteLoadDto
     {
@@ -8,8 +6,6 @@ namespace DataAccessLayer.DTO
 
         public int LoadId { get; set; }
 
-        public DateTimeOffset Date { get; set; }
-
-        public bool IsFullExecuted { get; set; }
+        public double Hours { get; set; }
     }
 }

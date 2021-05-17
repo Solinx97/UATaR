@@ -28,7 +28,7 @@ namespace UATaRApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ShowTeacher()
+        public async Task<IActionResult> GetTeachers()
         {
             try
             {

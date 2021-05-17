@@ -5,6 +5,7 @@ using BusinessLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UATaRApi.ViewModels;
 
@@ -28,7 +29,7 @@ namespace UATaRApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ShowLoad()
+        public async Task<IActionResult> GetLoads()
         {
             try
             {
@@ -46,8 +47,27 @@ namespace UATaRApi.Controllers
             }
         }
 
+        [HttpGet("teacherId/{teacherId}")]
+        public async Task<IActionResult> GetLoadByTeacherId(int teacherId)
+        {
+            try
+            {
+                var data = await _loadService.GetAllAsync();
+                var dataByteacherId = data.Where(val => val.TeacherId == teacherId);
+                var map = _mapper.Map<List<LoadViewModel>>(dataByteacherId);
+
+                return Ok(map);
+            }
+            catch (NotFoundException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return BadRequest();
+            }
+        }
+
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetLoad(int id)
+        public async Task<IActionResult> GetLoadById(int id)
         {
             try
             {

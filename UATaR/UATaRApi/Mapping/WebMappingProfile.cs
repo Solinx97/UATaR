@@ -14,6 +14,7 @@ namespace UATaRApi.Mapping
             CreateMap<SpecialityViewModel, Speciality>().ReverseMap();
             CreateMap<SubjectViewModel, Subject>().ReverseMap();
             CreateMap<TeacherViewModel, Teacher>().ReverseMap();
+            CreateMap<GroupViewModel, Group>().ReverseMap();
         }
     }
 }

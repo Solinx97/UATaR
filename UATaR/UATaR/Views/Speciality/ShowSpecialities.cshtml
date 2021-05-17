@@ -4,6 +4,7 @@
     ViewData["Title"] = "Специальности";
 }
 
+@await Html.PartialAsync("~/Views/_Directories.cshtml")
 <div class="flex-row__space-between" style="margin: 1vw;">
     <h5>Специальности</h5>
     @if (User.Identity.IsAuthenticated && User.IsInRole(RoleNames.MethodologistDepartment))
@@ -20,16 +21,12 @@
             <div class="card" style="width: 25vw; margin: 2vw;">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item flex-row__space-between">
-                        <div class="alert alert-success" role="alert">Name</div>
-                        <div class="alert alert-light" role="alert">@item.Name</div>
-                    </li>
-                    <li class="list-group-item flex-row__space-between">
-                        <div class="alert alert-success" role="alert">Facility</div>
-                        <div class="alert alert-light" role="alert">@item.Facility</div>
-                    </li>
-                    <li class="list-group-item flex-row__space-between">
-                        <div class="alert alert-success" role="alert">Chair</div>
+                        <div class="alert alert-success" role="alert">Кафедра</div>
                         <div class="alert alert-light" role="alert">@item.Chair</div>
+                    </li>
+                    <li class="list-group-item flex-row__space-between">
+                        <div class="alert alert-success" role="alert">Специальность</div>
+                        <div class="alert alert-light" role="alert">@item.Name</div>
                     </li>
                 </ul>
                 @if (User.Identity.IsAuthenticated && User.IsInRole(RoleNames.MethodologistDepartment))

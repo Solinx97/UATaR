@@ -22,9 +22,11 @@ namespace UATaR.Components
         {
             var data = new List<TeacherViewModel>();
             var result = await _client.GetAsync($"{ControllerName}");
+
             if (result.StatusCode == HttpStatusCode.OK)
             {
                 data = await _client.ReadAsJsonAsync<List<TeacherViewModel>>(result);
+                data.Insert(0, new TeacherViewModel());
             }
 
             var selectList = new SelectList(data, "Id", "FullName");

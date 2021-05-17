@@ -13,6 +13,7 @@ namespace UATaR.Controllers
     public class ExecuteLoadController : Controller
     {
         private const string ApiControllerName = "executeLoad";
+        private const string ApiLoadControllerName = "load";
         private readonly IApiClientHelper _client;
 
         public ExecuteLoadController(IApiClientHelper client)
@@ -21,7 +22,6 @@ namespace UATaR.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = RoleNames.HeadDepartment)]
         [AllowAnonymous]
         public async Task<IActionResult> ShowExecuteLoads()
         {
@@ -32,21 +32,43 @@ namespace UATaR.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ShowExecuteLoadsByTeacherId(int teacherId)
+        {
+            var result = await _client.GetAsync($"{ApiLoadControllerName}/teacherId/{teacherId}");
+            var content = await _client.ReadAsJsonAsync<List<LoadViewModel>>(result);
+
+            return PartialView(content);
+        }
+
+        [HttpGet]
         public IActionResult CreateExecuteLoad()
         {
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public Task<IActionResult> CreateExecuteLoad(ExecuteLoadViewModel executeLoad)
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateExecuteLoad(int loadId, double hours)
         {
-            if (!ModelState.IsValid)
+            var executeLoad = new ExecuteLoadViewModel
             {
-                return CreateExecuteLoad(executeLoad);
-            }
+                LoadId = loadId,
+                Hours = hours
+            };
 
-            return CreateExecuteLoadInternal(executeLoad);
+            var result = await _client.PostAsync(ApiControllerName, executeLoad);
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                return RedirectToAction(nameof(ShowExecuteLoads));
+            }
+            else
+            {
+                var exMessage = await result.Content.ReadAsStringAsync();
+                ModelState.AddModelError(string.Empty, exMessage);
+
+                return CreateExecuteLoad();
+            }
         }
 
         [HttpGet]
@@ -82,22 +104,6 @@ namespace UATaR.Controllers
             await _client.DeleteAsync($"{ApiControllerName}/{id}");
 
             return RedirectToAction(nameof(ShowExecuteLoads));
-        }
-
-        private async Task<IActionResult> CreateExecuteLoadInternal(ExecuteLoadViewModel executeLoad)
-        {
-            var result = await _client.PostAsync(ApiControllerName, executeLoad);
-            if (result.StatusCode == HttpStatusCode.OK)
-            {
-                return RedirectToAction(nameof(ShowExecuteLoads));
-            }
-            else
-            {
-                var exMessage = await result.Content.ReadAsStringAsync();
-                ModelState.AddModelError(string.Empty, exMessage);
-
-                return CreateExecuteLoad();
-            }
         }
     }
 }

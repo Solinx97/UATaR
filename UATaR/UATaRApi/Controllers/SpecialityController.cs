@@ -28,7 +28,7 @@ namespace UATaRApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ShowSpeciality()
+        public async Task<IActionResult> GetSpecialiies()
         {
             try
             {

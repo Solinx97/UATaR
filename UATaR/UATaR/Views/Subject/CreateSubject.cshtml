@@ -4,6 +4,7 @@
     ViewData["Title"] = "Создание предмета";
 }
 
+@await Html.PartialAsync("~/Views/_Directories.cshtml")
 <div class="flex-row__space-between">
     <h5 style="margin: 2vw;">Создание предмета</h5>
 </div>
@@ -18,13 +19,6 @@
                         <input class="form-control" type="text" asp-for="Name" />
                     </div>
                     <span asp-validation-for="Name" />
-                </div>
-                <div class="flex-column">
-                    <div>
-                        <label asp-for="Facility"></label>
-                        <input class="form-control" type="text" asp-for="Facility" />
-                    </div>
-                    <span asp-validation-for="Facility" />
                 </div>
                 <input type="submit" class="btn btn-success" style="margin: 1vw;" value="Создать" />
             </div>

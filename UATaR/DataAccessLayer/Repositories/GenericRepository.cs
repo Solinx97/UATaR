@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories
 {
-    public class GenericRepository<TModel> : IGenericRepository<TModel, int>
+    internal class GenericRepository<TModel> : IGenericRepository<TModel, int>
         where TModel : class
     {
         private readonly DataContext _context;

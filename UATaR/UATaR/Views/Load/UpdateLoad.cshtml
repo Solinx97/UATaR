@@ -4,20 +4,22 @@
     ViewData["Title"] = "Обновление нагрузки";
 }
 
+@await Html.PartialAsync("~/Views/_Directories.cshtml")
 <div class="flex-row__space-between">
     <h5 style="margin: 2vw;">Обновление нагрузки</h5>
 </div>
 <div style="width: 30vw; margin: 3vw;">
     <div class="form-group">
         <form asp-action="UpdateLoad" asp-controller="Load" asp-antiforgery="true">
+            <input type="hidden" name="Id" value="@Model.Id">
             <div>
                 <div class="validation" asp-validation-summary="ModelOnly" />
                 <div class="flex-column">
                     <div>
-                        <label asp-for="Description"></label>
-                        <input class="form-control" type="text" asp-for="Description" />
+                        <label asp-for="Hours"></label>
+                        <input class="form-control" type="number" asp-for="Hours" />
                     </div>
-                    <span asp-validation-for="Description" />
+                    <span asp-validation-for="Hours" />
                 </div>
                 @await Component.InvokeAsync("GetSubjects")
                 @await Component.InvokeAsync("GetTeachers")

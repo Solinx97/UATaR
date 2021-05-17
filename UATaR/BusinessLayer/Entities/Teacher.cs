@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BusinessLayer.Entities
+﻿namespace BusinessLayer.Entities
 {
     public class Teacher
     {
@@ -11,7 +9,5 @@ namespace BusinessLayer.Entities
         public string Position { get; set; }
 
         public string Education { get; set; }
-
-        public DateTimeOffset Birthday { get; set; }
     }
 }

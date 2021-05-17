@@ -10,10 +10,12 @@ namespace UATaR.ViewModels
 
         public int SubjectId { get; set; }
 
+        public int GroupId { get; set; }
+
         public int LoadTypeId { get; set; }
 
-        [Display(Name = "Description")]
+        [Display(Name = "Часов")]
         [Required(ErrorMessage = "Required first name")]
-        public string Description { get; set; }
+        public double Hours { get; set; }
     }
 }

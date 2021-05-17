@@ -22,5 +22,7 @@ namespace DataAccessLayer.DTO
         public virtual DbSet<LoadDto> Load { get; set; }
 
         public virtual DbSet<ExecuteLoadDto> ExecuteLoad { get; set; }
+
+        public virtual DbSet<GroupDto> Group { get; set; }
     }
 }

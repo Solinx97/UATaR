@@ -19,6 +19,7 @@ namespace BusinessLayer.Configuration
             services.AddScoped<IService<LoadType, int>, LoadTypeService>();
             services.AddScoped<IService<Load, int>, LoadService>();
             services.AddScoped<IService<ExecuteLoad, int>, ExecuteLoadService>();
+            services.AddScoped<IService<Group, int>, GroupService>();
         }
     }
 }

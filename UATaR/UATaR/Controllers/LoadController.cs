@@ -21,7 +21,6 @@ namespace UATaR.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = RoleNames.HeadDepartment)]
         [AllowAnonymous]
         public async Task<IActionResult> ShowLoads()
         {
@@ -29,6 +28,16 @@ namespace UATaR.Controllers
             var content = await _client.ReadAsJsonAsync<List<LoadViewModel>>(result);
 
             return View(content);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ShowLoadsByTeacherId(int teacherId)
+        {
+            var result = await _client.GetAsync($"{ApiControllerName}/teacherId/{teacherId}");
+            var content = await _client.ReadAsJsonAsync<List<LoadViewModel>>(result);
+
+            return PartialView(content);
         }
 
         [HttpGet]

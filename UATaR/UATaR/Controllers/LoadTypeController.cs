@@ -21,7 +21,6 @@ namespace UATaR.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = RoleNames.HeadDepartment)]
         [AllowAnonymous]
         public async Task<IActionResult> ShowLoadTypes()
         {

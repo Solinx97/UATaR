@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace UATaR.ViewModels
 {
@@ -7,21 +6,16 @@ namespace UATaR.ViewModels
     {
         public int Id { get; set; }
 
-        [Display(Name = "Full name")]
+        [Display(Name = "Полное имя")]
         [Required(ErrorMessage = "Required first name")]
         public string FullName { get; set; }
 
-        [Display(Name = "Position")]
+        [Display(Name = "Должность")]
         [Required(ErrorMessage = "Required first name")]
         public string Position { get; set; }
 
-        [Display(Name = "Education")]
+        [Display(Name = "Образование")]
         [Required(ErrorMessage = "Required first name")]
         public string Education { get; set; }
-
-        [Display(Name = "Birthday")]
-        [Required(ErrorMessage = "Required first name")]
-        [DataType(DataType.Date)]
-        public DateTimeOffset Birthday { get; set; }
     }
 }

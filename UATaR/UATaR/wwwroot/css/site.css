@@ -74,3 +74,16 @@ body {
     align-items: center;
     flex-wrap: wrap;
 }
+
+.flex-column__space-between {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.flex-row__center {
+    display: flex;
+    justify-content: center;
+}

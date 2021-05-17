@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DataAccessLayer.DTO
+﻿namespace DataAccessLayer.DTO
 {
     public class TeacherDto
     {
@@ -11,7 +9,5 @@ namespace DataAccessLayer.DTO
         public string Position { get; set; }
 
         public string Education { get; set; }
-
-        public DateTimeOffset Birthday { get; set; }
     }
 }

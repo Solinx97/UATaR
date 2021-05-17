@@ -4,38 +4,14 @@
     ViewData["Title"] = "Выполнение нагрузки";
 }
 
-<div class="flex-row__space-between">
-    <h5 style="margin: 2vw;">Выполненые нагрузки</h5>
+@await Html.PartialAsync("~/Views/_Directories.cshtml")
+<div class="flex-row__space-between" style="margin: 1vw;">
+    <h5>Выполненые нагрузки</h5>
 </div>
-<div style="width: 30vw; margin: 3vw;">
-    <div class="form-group">
-        <form asp-action="CreateExecuteLoad" asp-controller="ExecuteLoad" asp-antiforgery="true">
-            <div>
-                <div class="validation" asp-validation-summary="ModelOnly" />
-                <div class="flex-column">
-                    <div>
-                        <label asp-for="DateExecute"></label>
-                        <input class="form-control" type="date" asp-for="DateExecute" />
-                    </div>
-                    <span asp-validation-for="DateExecute" />
-                </div>
-                @await Component.InvokeAsync("GetLoads")
-                <div class="flex-column">
-                    <div class="flex-row__space-between">
-                        <label asp-for="IsFullExecuted"></label>
-                        <input class="flex-row__space-between" type="checkbox" asp-for="IsFullExecuted" />
-                    </div>
-                    <span asp-validation-for="IsFullExecuted" />
-                </div>
-                <input type="submit" class="btn btn-success" style="margin: 1vw;" value="Создать" />
-            </div>
-        </form>
-        <form method="get" asp-action="ShowExecuteLoads" asp-controller="ExecuteLoad" asp-antiforgery="false">
-            <input type="submit" class="btn btn-secondary" style="margin: 1vw;" value="Отмена" />
-        </form>
-    </div>
-</div>
+@await Component.InvokeAsync("GetTeachers")
+<div id="result"></div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
+<script src="~/js/ExecuteLoad/executeLoad.content.js" asp-append-version="true"></script>

@@ -79,11 +79,6 @@ namespace BusinessLayer.Services
 
         private async Task<int> CreateInternalAsync(Teacher item)
         {
-            if (item.Birthday > DateTimeOffset.Now)
-            {
-                throw new DateException("Date of birthday can't be in the future tense", nameof(item.Birthday));
-            }
-
             await _teacherRepository.CreateAsync(_mapper.Map<TeacherDto>(item));
 
             var allData = await _teacherRepository.GetAllAsync();
@@ -109,11 +104,6 @@ namespace BusinessLayer.Services
             if (!allData.Any())
             {
                 throw new NotFoundException($"Collection entity {nameof(Teacher)} not found", nameof(allData));
-            }
-
-            if (item.Birthday > DateTimeOffset.Now)
-            {
-                throw new DateException("Date of birthday can't be in the future tense", nameof(item.Birthday));
             }
 
             await _teacherRepository.UpdateAsync(_mapper.Map<TeacherDto>(item));

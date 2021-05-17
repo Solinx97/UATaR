@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace UATaRApi.ViewModels
+﻿namespace UATaRApi.ViewModels
 {
     public class TeacherViewModel
     {
@@ -11,7 +9,5 @@ namespace UATaRApi.ViewModels
         public string Position { get; set; }
 
         public string Education { get; set; }
-
-        public DateTimeOffset Birthday { get; set; }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BusinessLayer.Entities
+﻿namespace BusinessLayer.Entities
 {
     public class ExecuteLoad
     {
@@ -8,8 +6,6 @@ namespace BusinessLayer.Entities
 
         public int LoadId { get; set; }
 
-        public DateTimeOffset Date { get; set; }
-
-        public bool IsFullExecuted { get; set; }
+        public double Hours { get; set; }
     }
 }

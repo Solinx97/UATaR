@@ -28,7 +28,7 @@ namespace UATaRApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ShowLoadType()
+        public async Task<IActionResult> GetLoadTypes()
         {
             try
             {

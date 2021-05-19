@@ -16,17 +16,17 @@ namespace UATaR.Components
             _client = client;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(int loadId)
+        public async Task<IViewComponentResult> InvokeAsync(int loadId, string viewName)
         {
             var result = await _client.GetAsync($"{ControllerName}/loadId/{loadId}");
             if (result.StatusCode == HttpStatusCode.OK)
             {
                 var data = await _client.ReadAsJsonAsync<ExecuteLoadViewModel>(result);
-                return View(data);
+                return View(viewName, data);
             }
             else
             {
-                return View(new ExecuteLoadViewModel());
+                return View(viewName, new ExecuteLoadViewModel());
             }
         }
     }

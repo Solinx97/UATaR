@@ -3,7 +3,7 @@
 teacher.addEventListener("change", () => {
     let dataDictionary = {
         teacherId: +teacher.value,
-        viewName: "ShowLoadsByTeacherId"
+        viewName: "ShowLoadsByTeacherIdForReport"
     };
 
     ajaxQuery("GET", "/Load/ShowLoadsByTeacherId", undefined, dataDictionary, "#result");

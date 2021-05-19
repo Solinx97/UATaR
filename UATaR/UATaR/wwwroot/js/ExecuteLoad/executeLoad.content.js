@@ -8,10 +8,11 @@ let addAntiForgeryToken = function (data) {
 
 teacher.addEventListener("change", () => {
     let dataDictionary = {
-        teacherId: +teacher.value
+        teacherId: +teacher.value,
+        viewName: "ShowLoadsByTeacherIdForExecute"
     };
 
-    ajaxQuery("GET", "/ExecuteLoad/ShowExecuteLoadsByTeacherId", undefined, dataDictionary, "#result");
+    ajaxQuery("GET", "/Load/ShowLoadsByTeacherId", undefined, dataDictionary, "#result");
 });
 
 document.addEventListener("click", (event) => {

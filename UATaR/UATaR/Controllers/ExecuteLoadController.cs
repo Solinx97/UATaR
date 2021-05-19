@@ -32,23 +32,13 @@ namespace UATaR.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> ShowExecuteLoadsByTeacherId(int teacherId)
-        {
-            var result = await _client.GetAsync($"{ApiLoadControllerName}/teacherId/{teacherId}");
-            var content = await _client.ReadAsJsonAsync<List<LoadViewModel>>(result);
-
-            return PartialView(content);
-        }
-
-        [HttpGet]
         public IActionResult CreateExecuteLoad()
         {
             return View();
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateExecuteLoad(int loadId, double hours)
         {
             var executeLoad = new ExecuteLoadViewModel

@@ -32,12 +32,12 @@ namespace UATaR.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> ShowLoadsByTeacherId(int teacherId)
+        public async Task<IActionResult> ShowLoadsByTeacherId(int teacherId, string viewName)
         {
             var result = await _client.GetAsync($"{ApiControllerName}/teacherId/{teacherId}");
             var content = await _client.ReadAsJsonAsync<List<LoadViewModel>>(result);
 
-            return PartialView(content);
+            return PartialView(viewName, content);
         }
 
         [HttpGet]

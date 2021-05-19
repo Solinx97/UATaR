@@ -54,7 +54,7 @@
                                         <div>@load.Hours</div>
                                     </li>
                                     <li class="flex-row__center">
-                                        @await Component.InvokeAsync("GetExecuteLoadsByLoadId", new { loadId = load.Id })
+                                        @await Component.InvokeAsync("GetExecuteLoadsByLoadId", new { loadId = load.Id, viewName = "Default" })
                                     </li>
                                 </ul>
                             </li>
@@ -68,6 +68,9 @@
             {
                 <li style="width: 100%" class="list-group-item">
                     <div>@item.Sum(val => val.Hours)</div>
+                </li>
+                <li style="width: 100%" class="list-group-item">
+                    @await Component.InvokeAsync("GetExecuteLoadsByLoadsId", new { loads = item })
                 </li>
             }
         </ul>

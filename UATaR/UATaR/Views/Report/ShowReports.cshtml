@@ -1,0 +1,40 @@
+﻿@model ReportViewModel
+
+@{
+    ViewData["Title"] = "Сформировать Акт";
+}
+
+<div class="flex-row__space-between">
+    <h5 style="margin: 2vw;">Сформировать Акт</h5>
+</div>
+<div style="width: 30vw; margin: 3vw;">
+    <div class="form-group">
+        <div>
+            <div class="validation" asp-validation-summary="ModelOnly" />
+            <div class="flex-column">
+                <div>
+                    <label asp-for="StartPeriod"></label>
+                    <input class="form-control" type="date" asp-for="StartPeriod" />
+                </div>
+                <span asp-validation-for="StartPeriod" />
+            </div>
+            <div class="flex-column">
+                <div>
+                    <label asp-for="FinishPeriod"></label>
+                    <input class="form-control" type="date" asp-for="FinishPeriod" />
+                </div>
+                <span asp-validation-for="FinishPeriod" />
+            </div>
+            @await Component.InvokeAsync("GetTeachers")
+            <div id="result" style="width: 1250px"></div>
+            <input type="button" data-content="report-build" class="btn btn-success" style="margin: 1vw;" value="Сформировать" />
+            <input type="button" data-content="report-build" class="btn btn-warning" style="margin: 1vw;" value="Создать документ" />
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+
+<script src="~/js/Report/report.content.js" asp-append-version="true"></script>

@@ -11,43 +11,42 @@
 }
 
 <div hidden="@isHaveLoads">
-    <ul style="padding: 0" class="flex-row__space-between">
-        <li style="width: calc(100% / @loadTypeCount)" class="list-group-item">Дисциплина</li>
-        <li style="width: calc(100% / @loadTypeCount)" class="list-group-item">Группа</li>
+    <ul style="padding: 0;" class="flex-row__space-between">
+        <li style="width: calc(100% / @loadTypeCount);" class="table-container">Дисциплина</li>
+        <li style="width: calc(100% / @loadTypeCount);" class="table-container">Группа</li>
         @foreach (var item in groupByLoadTypes)
         {
-            <li style="width: calc(100% / @loadTypeCount)" class="list-group-item">
+            <li style="width: calc(100% / @loadTypeCount);" class="table-container">
                 @await Component.InvokeAsync("GetLoadTypeById", new { id = item.Key })
             </li>
          }
-         <li style="width: calc(100% / @loadTypeCount)" class="list-group-item">Итого</li>
-        </ul>
+         <li style="width: calc(100% / @loadTypeCount);" class="table-container">Итого</li>
+    </ul>
     <div class="flex-row__space-between">
-        <ul style="width: calc(100% / @loadTypeCount); padding: 0" class="flex-column__space-between">
+        <ul style="width: calc(100% / @loadTypeCount); padding: 0;" class="flex-column__space-between">
             @foreach (var item in groupBySubjects)
             {
-                <li style="width: 100%" class="list-group-item">
+                <li style="width: 100%;" class="table-container">
                     @await Component.InvokeAsync("GetSubjectById", new { id = item.Key })
                 </li>
             }
         </ul>
-        <ul style="width: calc(100% / @loadTypeCount); padding: 0" class="flex-column__space-between">
+        <ul style="width: calc(100% / @loadTypeCount); padding: 0;" class="flex-column__space-between">
             @foreach (var item in groupByGroup)
             {
-                <li style="width: 100%" class="list-group-item">
+                <li style="width: 100%;" class="table-container">
                     @await Component.InvokeAsync("GetGroupById", new { id = item.Key })
                 </li>
-
             }
         </ul>
-        <ul style="width:@hoursCount; padding: 0" class="flex-column__space-between">
+        <ul style="width:@hoursCount; padding: 0;" class="flex-column__space-between">
             @foreach (var item in groupBySubjects)
             {
                 <li style="width: 100%">
-                    <ul style="padding: 0" class="flex-row__space-between">
+                    <ul style="padding: 0;" class="flex-row__space-between">
                         @foreach (var load in item)
                         {
-                            <li style="width: 33%" class="list-group-item">
+                            <li style="width: calc(100% / (@loadTypeCount - 3));" class="table-container">
                                 <div>@load.Hours</div>
                             </li>
                         }
@@ -55,10 +54,10 @@
                 </li>
             }
         </ul>
-        <ul style="width: calc(100% / @loadTypeCount); padding: 0" class="flex-column__space-between">
+        <ul style="width: calc(100% / @loadTypeCount); padding: 0;" class="flex-column__space-between">
             @foreach (var item in groupBySubjects)
             {
-                <li style="width: 100%" class="list-group-item">
+                <li style="width: 100%;" class="table-container">
                     <div>@item.Sum(val => val.Hours)</div>
                 </li>
             }

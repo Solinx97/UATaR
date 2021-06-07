@@ -4,10 +4,22 @@
     ViewData["Title"] = "Нагрузки";
 }
 
-@await Html.PartialAsync("~/Views/_Directories.cshtml")
+@{
+    var groupByTeachers = Model.GroupBy(val => val.TeacherId).ToList();
+}
+
 <div class="flex-row__space-between" style="margin: 1vw;">
     <h5>Нагрузки</h5>
 </div>
+<ul>
+    @foreach (var item in groupByTeachers)
+    {
+        <li>
+            @await Component.InvokeAsync("GetTeacherById", new { id = item.Key })
+            @await Html.PartialAsync("ShowLoadsByTeacherId", item.Select(val => val).ToList()) 
+        </li>
+    }
+</ul>
 @await Component.InvokeAsync("GetTeachers")
 <div id="result"></div>
 

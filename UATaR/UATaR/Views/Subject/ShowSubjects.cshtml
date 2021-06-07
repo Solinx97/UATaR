@@ -18,11 +18,11 @@
     @foreach (var item in Model)
     {
         <li>
-            <div class="card" style="width: 25vw; margin: 2vw;">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item flex-row__space-between">
-                        <div class="alert alert-success" role="alert">Предмет</div>
-                        <div class="alert alert-light" role="alert">@item.Name</div>
+            <div style="width: 40vw; margin: 2vw;">
+                <ul>
+                    <li class="flex-row__space-between">
+                        <div>Предмет</div>
+                        <div><strong>@item.Name</strong></div>
                     </li>
                 </ul>
                 @if (User.Identity.IsAuthenticated && User.IsInRole(RoleNames.MethodologistDepartment))

@@ -38,7 +38,6 @@ namespace UATaR.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateExecuteLoad(int loadId, double hours)
         {
             var executeLoad = new ExecuteLoadViewModel

@@ -18,19 +18,19 @@
     @foreach (var item in Model)
     {
         <li>
-            <div class="card" style="width: 25vw; margin: 2vw;">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item flex-row__space-between">
-                        <div class="alert alert-success" role="alert">Полное имя</div>
-                        <div class="alert alert-light" role="alert">@item.FullName</div>
+            <div style="width: 40vw; margin: 2vw;">
+                <ul>
+                    <li class="flex-row__space-between">
+                        <div>Полное имя</div>
+                        <div><strong>@item.FullName</strong></div>
                     </li>
-                    <li class="list-group-item flex-row__space-between">
-                        <div class="alert alert-success" role="alert">Должность</div>
-                        <div class="alert alert-light" role="alert">@item.Position</div>
+                    <li class="flex-row__space-between">
+                        <div>Должность</div>
+                        <div><strong>@item.Position</strong></div>
                     </li>
-                    <li class="list-group-item flex-row__space-between">
-                        <div class="alert alert-success" role="alert">Образовнаие</div>
-                        <div class="alert alert-light" role="alert">@item.Education</div>
+                    <li class="flex-row__space-between">
+                        <div>Образовнаие</div>
+                        <div><strong>@item.Education</strong></div>
                     </li>
                 </ul>
                 @if (User.Identity.IsAuthenticated && User.IsInRole(RoleNames.MethodologistDepartment))

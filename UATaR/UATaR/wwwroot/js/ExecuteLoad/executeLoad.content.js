@@ -18,16 +18,12 @@ teacher.addEventListener("change", () => {
 document.addEventListener("click", (event) => {
     let dataContent = event.target.getAttribute("data-content");
     if (dataContent == "saveExecuteLoad") {
-        let loadId = document.querySelectorAll("#LoadId");
-        let hours = document.querySelectorAll("#Hours");
-
-        for (var i = 0; i < loadId.length; i++) {
-            let dataDictionary = {
-                loadId: +loadId[i].value,
-                hours: +hours[i].value
-            };
-
-            ajaxQuery("POST", "/ExecuteLoad/CreateExecuteLoad", undefined, dataDictionary);
+        let executeLoadId = document.querySelectorAll("#ExecuteLoadId")[0];
+        if (executeLoadId.value > 0) {
+            updateExecuteLoad();
+        }
+        else {
+            createExecuteLoad();
         }
     }
 });
@@ -48,4 +44,32 @@ function ajaxQuery(ajaxType, ajaxUrl, loadElement, dataDictionary, resultId) {
             $(resultId).html(data);
         }
     });
+}
+
+function createExecuteLoad() {
+    let loadId = document.querySelectorAll("#LoadId");
+    let hours = document.querySelectorAll("#Hours");
+    for (var i = 0; i < loadId.length; i++) {
+        let dataDictionary = {
+            loadId: +loadId[i].value,
+            hours: +hours[i].value
+        };
+
+        ajaxQuery("POST", "/ExecuteLoad/CreateExecuteLoad", undefined, dataDictionary);
+    }
+}
+
+function updateExecuteLoad() {
+    let excecuteLoadId = document.querySelectorAll("#ExecuteLoadId");
+    let loadId = document.querySelectorAll("#LoadId");
+    let hours = document.querySelectorAll("#Hours");
+    for (var i = 0; i < loadId.length; i++) {
+        let dataDictionary = {
+            excecuteLoadId: +excecuteLoadId[i].value,
+            loadId: +loadId[i].value,
+            hours: +hours[i].value
+        };
+
+        ajaxQuery("POST", "/ExecuteLoad/UpdateExecuteLoad", undefined, dataDictionary);
+    }
 }

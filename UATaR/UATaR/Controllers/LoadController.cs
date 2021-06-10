@@ -13,6 +13,7 @@ namespace UATaR.Controllers
     public class LoadController : Controller
     {
         private const string ApiControllerName = "load";
+        private const string TeacherController = "teacher";
         private readonly IApiClientHelper _client;
 
         public LoadController(IApiClientHelper client)
@@ -36,6 +37,9 @@ namespace UATaR.Controllers
         {
             var result = await _client.GetAsync($"{ApiControllerName}/teacherId/{teacherId}");
             var content = await _client.ReadAsJsonAsync<List<LoadViewModel>>(result);
+
+            var teacherResult = await _client.GetAsync($"{TeacherController}/{teacherId}");
+            ViewBag.Teacher = await _client.ReadAsJsonAsync<TeacherViewModel>(teacherResult);
 
             return PartialView(viewName, content);
         }

@@ -7,9 +7,11 @@ namespace UATaR.ViewModels
     {
         public int Id { get; set; }
 
-        public int TeacherId { get; set; }
+        public string ExecutorFullName { get; set; }
 
-        public int ExecuteLoadId { get; set; }
+        public string Education { get; set; }
+
+        public double Hours { get; set; }
 
         [Display(Name = "Начало периода")]
         [Required(ErrorMessage = "Required password")]

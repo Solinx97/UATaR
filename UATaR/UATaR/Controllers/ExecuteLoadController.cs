@@ -70,9 +70,15 @@ namespace UATaR.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateExecuteLoad(ExecuteLoadViewModel executeLoad)
+        public async Task<IActionResult> UpdateExecuteLoad(int excecuteLoadId, int loadId, double hours)
         {
+            var executeLoad = new ExecuteLoadViewModel
+            {
+                Id = excecuteLoadId,
+                LoadId = loadId,
+                Hours = hours,
+            };
+
             var result = await _client.PutAsync(ApiControllerName, executeLoad);
             if (result.StatusCode == HttpStatusCode.OK)
             {
@@ -83,7 +89,7 @@ namespace UATaR.Controllers
                 var exMessage = await result.Content.ReadAsStringAsync();
                 ModelState.AddModelError(string.Empty, exMessage);
 
-                return await UpdateExecuteLoad(executeLoad);
+                return await UpdateExecuteLoad(excecuteLoadId, loadId, hours);
             }
         }
 

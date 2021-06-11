@@ -1,0 +1,14 @@
+﻿@model List<ExecuteLoadViewModel>
+
+@{
+    ViewData["Title"] = "Выполнение нагрузки";
+}
+
+<div class="flex-row__space-between" style="margin: 1vw;">
+    <h5>Выполненые нагрузки</h5>
+</div>
+@await Component.InvokeAsync("GetTeachers")
+<div style="margin-top: 10px" id="update-execute-load"></div>
+<div style="margin-top: 10px" id="result"></div>
+
+<script src="~/js/ExecuteLoad/executeLoad.content.js" asp-append-version="true"></script>

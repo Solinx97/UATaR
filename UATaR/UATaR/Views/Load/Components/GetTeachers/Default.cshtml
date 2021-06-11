@@ -1,0 +1,6 @@
+﻿@model SelectList
+
+<div style="margin-top: 5px;">
+    <label>Преподаватели</label>
+    <select style="width: 300px;" name="TeacherId" class="form-control" asp-for="@Model.DataTextField" asp-items="@Model"></select>
+</div>

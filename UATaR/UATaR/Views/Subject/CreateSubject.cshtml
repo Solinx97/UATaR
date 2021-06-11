@@ -1,0 +1,34 @@
+﻿@model SubjectViewModel
+
+@{
+    ViewData["Title"] = "Создание предмета";
+}
+
+@await Html.PartialAsync("~/Views/_Directories.cshtml")
+<div class="flex-row__space-between">
+    <h5 style="margin: 2vw;">Создание предмета</h5>
+</div>
+<div style="width: 30vw; margin: 3vw;">
+    <div class="form-group">
+        <form asp-action="CreateSubject" asp-controller="Subject" asp-antiforgery="true">
+            <div>
+                <div class="validation" asp-validation-summary="ModelOnly" />
+                <div class="flex-column">
+                    <div>
+                        <label asp-for="Name"></label>
+                        <input class="form-control" type="text" asp-for="Name" />
+                        <span style="color: sandybrown;" asp-validation-for="Name"></span>
+                    </div>
+                </div>
+                <input type="submit" class="btn btn-success" style="margin: 1vw;" value="Создать" />
+            </div>
+        </form>
+        <form method="get" asp-action="ShowSubjects" asp-controller="Subject" asp-antiforgery="false">
+            <input type="submit" class="btn btn-secondary" style="margin: 1vw;" value="Отмена" />
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

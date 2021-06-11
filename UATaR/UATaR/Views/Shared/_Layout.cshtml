@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Институт повышения квалификации и переподготовки</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Институт повышения квалификации и переподготовки</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/LoadType/ShowLoadTypes">Справочники</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Load/ShowLoads">Нагрузки</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/ExecuteLoad/ShowExecuteLoads">Выполнение нагрузки</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Report/ShowReports">Отчеты</a>
+                        </li>
+                        <li class="form-inline nav-item">
+                            <a class="nav-link" href="/Account/Logout">Выход</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="form-inline nav-item">
+                            <a class="nav-link" href="/Account/Login">Авторизация</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

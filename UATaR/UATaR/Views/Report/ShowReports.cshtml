@@ -1,0 +1,47 @@
+﻿@model ReportViewModel
+
+@{
+    ViewData["Title"] = "Сформировать Акт";
+}
+
+<div class="flex-row__space-between">
+    <h5 style="margin: 2vw;">Сформировать Акт</h5>
+</div>
+<div style="width: 30vw; margin: 3vw;">
+    <div class="form-group">
+        <div>
+            <div class="validation" asp-validation-summary="ModelOnly" />
+            <div class="flex-column">
+                <div>
+                    <label asp-for="StartPeriod"></label>
+                    <input id="StartPeriod" class="form-control" type="date" asp-for="StartPeriod" />
+                </div>
+                <span asp-validation-for="StartPeriod" />
+            </div>
+            <div class="flex-column">
+                <div>
+                    <label asp-for="FinishPeriod"></label>
+                    <input id="FinishPeriod" class="form-control" type="date" asp-for="FinishPeriod" />
+                </div>
+                <span asp-validation-for="FinishPeriod" />
+            </div>
+            @await Component.InvokeAsync("GetTeachers")
+            <div id="document-create"></div>
+            <div id="not-set-period" class="alert alert-warning" hidden>
+                <strong>Ошибка!</strong> Необходимо указать <i>Начало периода</i> и/или <i>Окончание периода</i>.
+            </div>
+            <div id="incorrect-period" class="alert alert-warning" hidden>
+                <strong>Ошибка!</strong> <i>Начало периода</i> не может быть позднее <i>Окончание периода</i>.
+            </div>
+            <input type="button" id="report-build-btn" data-content="report-build" class="btn btn-success" style="margin: 1vw;" value="Сформировать" hidden />
+            <input type="button" id="document-create-btn" data-content="document-create" class="btn btn-warning" style="margin: 1vw;" value="Создать документ" hidden />
+            <div id="result" style="width: 1250px"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+
+<script src="~/js/Report/report.content.js" asp-append-version="true"></script>

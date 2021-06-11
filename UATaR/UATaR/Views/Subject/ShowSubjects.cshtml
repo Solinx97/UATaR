@@ -1,0 +1,38 @@
+﻿@model List<SubjectViewModel>
+
+@{
+    ViewData["Title"] = "Предметы";
+}
+
+@await Html.PartialAsync("~/Views/_Directories.cshtml")
+<div class="flex-row__space-between" style="margin: 1vw;">
+    <h5>Предметы</h5>
+    @if (User.Identity.IsAuthenticated && User.IsInRole(RoleNames.MethodologistDepartment))
+    {
+        <form method="get" asp-action="CreateSubject" asp-controller="Subject" asp-antiforgery="false">
+            <input type="submit" class="btn btn-success" value="Создать" />
+        </form>
+    }
+</div>
+<ul style="margin: 2vw;" class="flex-row__space-between">
+    @foreach (var item in Model)
+    {
+        <li>
+            <div style="width: 40vw; margin: 2vw;">
+                <ul>
+                    <li class="flex-row__space-between">
+                        <div>Предмет</div>
+                        <div><strong>@item.Name</strong></div>
+                    </li>
+                </ul>
+                @if (User.Identity.IsAuthenticated && User.IsInRole(RoleNames.MethodologistDepartment))
+                {
+                    <div class="card-body flex-row__space-between">
+                        @FormHelper.CreateForm(Html, "btn btn-success", "Subject", "UpdateSubject", "Редактировтаь", @item.Id.ToString())
+                        @FormHelper.CreateForm(Html, "btn btn-warning", "Subject", "DeleteSubject", "Удалить", @item.Id.ToString())
+                    </div>
+                }
+            </div>
+        </li>
+    }
+</ul>

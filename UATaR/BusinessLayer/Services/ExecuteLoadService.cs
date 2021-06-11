@@ -79,9 +79,9 @@ namespace BusinessLayer.Services
 
         private async Task<int> CreateInternalAsync(ExecuteLoad item)
         {
-            if (item.Hours <= 0)
+            if (item.Hours < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(item.Hours), "Hours don't be zero or negative");
+                throw new ArgumentOutOfRangeException(nameof(item.Hours), "Количество часов не может быть отрицательным");
             }
 
             await _executeLoadRepository.CreateAsync(_mapper.Map<ExecuteLoadDto>(item));
@@ -111,9 +111,9 @@ namespace BusinessLayer.Services
                 throw new NotFoundException($"Collection entity {nameof(ExecuteLoad)} not found", nameof(allData));
             }
 
-            if (item.Hours <= 0)
+            if (item.Hours < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(item.Hours), "Hours don't be zero or negative");
+                throw new ArgumentOutOfRangeException(nameof(item.Hours), "Количество часов не может быть отрицательным");
             }
 
             await _executeLoadRepository.UpdateAsync(_mapper.Map<ExecuteLoadDto>(item));

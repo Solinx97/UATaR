@@ -7,7 +7,7 @@ namespace UATaR.ViewModels
         public int Id { get; set; }
 
         [Display(Name = "Название")]
-        [Required(ErrorMessage = "Required first name")]
+        [Required(ErrorMessage = "Поле 'Название' обязательно для заполнения")]
         public string Name { get; set; }
     }
 }

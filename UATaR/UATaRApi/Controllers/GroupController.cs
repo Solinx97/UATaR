@@ -4,6 +4,7 @@ using BusinessLayer.Exceptions;
 using BusinessLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UATaRApi.ViewModels;
@@ -60,7 +61,7 @@ namespace UATaRApi.Controllers
             {
                 _logger.LogError(ex.Message);
 
-                return BadRequest();
+                return Ok();
             }
         }
 
@@ -74,7 +75,7 @@ namespace UATaRApi.Controllers
 
                 return Ok();
             }
-            catch (DateException ex)
+            catch (ArgumentNullException ex)
             {
                 _logger.LogError(ex.Message);
 
@@ -92,22 +93,43 @@ namespace UATaRApi.Controllers
 
                 return Ok();
             }
-            catch (DateException ex)
+            catch (ArgumentNullException ex)
             {
                 _logger.LogError(ex.Message);
 
                 return BadRequest(ex.Message);
+            }
+            catch (NotFoundException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return Ok(ex.Message);
             }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGroup(int id)
         {
-            var data = await _groupService.GetByIdAsync(id);
-            var map = _mapper.Map<Group>(data);
-            await _groupService.DeleteAsync(map);
+            try
+            {
+                var data = await _groupService.GetByIdAsync(id);
+                var map = _mapper.Map<Group>(data);
+                await _groupService.DeleteAsync(map);
 
-            return Ok();
+                return Ok();
+            }
+            catch (ArgumentNullException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return BadRequest(ex.Message);
+            }
+            catch (NotFoundException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return Ok(ex.Message);
+            }
         }
     }
 }

@@ -47,15 +47,15 @@
                     <ul style="padding: 0" class="flex-row__space-between">
                         @foreach (var load in item)
                         {
-                        <li style="width: calc(100% / (@loadTypeCount - 3)); height: 80px;">
-                            <div class="table-container" style="height: 40px;">
-                                <input id="LoadId" value="@load.Id" hidden />
-                                <div>@load.Hours</div>
-                            </div>
-                            <div class="table-container" style="height: 40px;">
-                                @await Component.InvokeAsync("GetExecuteLoadsByLoadId", new { loadId = load.Id, viewName = "Default" })
-                            </div>
-                        </li>
+                            <li style="width: calc(100% / (@loadTypeCount - 3)); height: 80px;">
+                                <div class="table-container" style="height: 40px;">
+                                    <input id="LoadId" value="@load.Id" hidden />
+                                    <div>@load.Hours</div>
+                                </div>
+                                <div class="table-container" style="height: 40px;">
+                                    @await Component.InvokeAsync("GetExecuteLoadsByLoadId", new { loadId = load.Id, viewName = "Default" })
+                                </div>
+                            </li>
                         }
                     </ul>
                 </li>
@@ -74,4 +74,8 @@
         </ul>
     </div>
 </div>
-<input data-content="saveExecuteLoad" type="button" class="btn btn-success" style="margin: 1vw;" value="Сохранить" hidden="@isHaveLoads"/>
+<input data-content="saveExecuteLoad" type="button" class="btn btn-success" style="margin: 1vw;" value="Сохранить" hidden="@isHaveLoads" />
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

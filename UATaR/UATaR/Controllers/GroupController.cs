@@ -38,14 +38,25 @@ namespace UATaR.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public Task<IActionResult> CreateGroup(GroupViewModel executeLoad)
+        public async Task<IActionResult> CreateGroup(GroupViewModel group)
         {
             if (!ModelState.IsValid)
             {
-                return CreateGroup(executeLoad);
+                return View(group);
             }
 
-            return CreateGroupInternal(executeLoad);
+            var result = await _client.PostAsync(ApiControllerName, group);
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                return RedirectToAction(nameof(ShowGroups));
+            }
+            else
+            {
+                var exMessage = await result.Content.ReadAsStringAsync();
+                ModelState.AddModelError(string.Empty, exMessage);
+
+                return View();
+            }
         }
 
         [HttpGet]
@@ -61,6 +72,11 @@ namespace UATaR.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateGroup(GroupViewModel group)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(group);
+            }
+
             var result = await _client.PutAsync(ApiControllerName, group);
             if (result.StatusCode == HttpStatusCode.OK)
             {
@@ -71,7 +87,7 @@ namespace UATaR.Controllers
                 var exMessage = await result.Content.ReadAsStringAsync();
                 ModelState.AddModelError(string.Empty, exMessage);
 
-                return await UpdateGroup(group);
+                return View(group);
             }
         }
 
@@ -81,22 +97,6 @@ namespace UATaR.Controllers
             await _client.DeleteAsync($"{ApiControllerName}/{id}");
 
             return RedirectToAction(nameof(ShowGroups));
-        }
-
-        private async Task<IActionResult> CreateGroupInternal(GroupViewModel group)
-        {
-            var result = await _client.PostAsync(ApiControllerName, group);
-            if (result.StatusCode == HttpStatusCode.OK)
-            {
-                return RedirectToAction(nameof(ShowGroups));
-            }
-            else
-            {
-                var exMessage = await result.Content.ReadAsStringAsync();
-                ModelState.AddModelError(string.Empty, exMessage);
-
-                return CreateGroup();
-            }
         }
     }
 }

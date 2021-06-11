@@ -4,6 +4,7 @@ using BusinessLayer.Exceptions;
 using BusinessLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UATaRApi.ViewModels;
@@ -60,7 +61,7 @@ namespace UATaRApi.Controllers
             {
                 _logger.LogError(ex.Message);
 
-                return BadRequest();
+                return Ok();
             }
         }
 
@@ -74,7 +75,7 @@ namespace UATaRApi.Controllers
 
                 return Ok();
             }
-            catch (DateException ex)
+            catch (ArgumentNullException ex)
             {
                 _logger.LogError(ex.Message);
 
@@ -92,22 +93,43 @@ namespace UATaRApi.Controllers
 
                 return Ok();
             }
-            catch (DateException ex)
+            catch (ArgumentNullException ex)
             {
                 _logger.LogError(ex.Message);
 
                 return BadRequest(ex.Message);
+            }
+            catch (NotFoundException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return Ok();
             }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTeacher(int id)
         {
-            var map = await _teacherService.GetByIdAsync(id);
-            var data = _mapper.Map<Teacher>(map);
-            await _teacherService.DeleteAsync(data);
+            try
+            {
+                var map = await _teacherService.GetByIdAsync(id);
+                var data = _mapper.Map<Teacher>(map);
+                await _teacherService.DeleteAsync(data);
 
-            return Ok();
+                return Ok();
+            }
+            catch (ArgumentNullException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return BadRequest(ex.Message);
+            }
+            catch (NotFoundException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return Ok();
+            }
         }
     }
 }

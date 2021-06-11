@@ -42,6 +42,9 @@ function ajaxQuery(ajaxType, ajaxUrl, loadElement, dataDictionary, resultId) {
         data: dataDictionary,
         success: (data) => {
             $(resultId).html(data);
+        },
+        error: (jqXHR, exception) => {
+            console.log(jqXHR);
         }
     });
 }
@@ -56,6 +59,7 @@ function createExecuteLoad() {
         };
 
         ajaxQuery("POST", "/ExecuteLoad/CreateExecuteLoad", undefined, dataDictionary);
+        if (+hours[i].value < 0) break;
     }
 }
 
@@ -65,11 +69,18 @@ function updateExecuteLoad() {
     let hours = document.querySelectorAll("#Hours");
     for (var i = 0; i < loadId.length; i++) {
         let dataDictionary = {
-            excecuteLoadId: +excecuteLoadId[i].value,
+            id: +excecuteLoadId[i].value,
             loadId: +loadId[i].value,
             hours: +hours[i].value
         };
 
-        ajaxQuery("POST", "/ExecuteLoad/UpdateExecuteLoad", undefined, dataDictionary);
+        ajaxQuery("POST", "/ExecuteLoad/UpdateExecuteLoad", undefined, dataDictionary, "#update-execute-load");
+        if (+hours[i].value < 0) break;
     }
 }
+
+function renderErrorMessage(message) {
+    let error = document.querySelector("#error span");
+    console.log(error);
+    error.textContent = message;
+}   

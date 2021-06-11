@@ -4,6 +4,7 @@ using BusinessLayer.Exceptions;
 using BusinessLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UATaRApi.ViewModels;
@@ -60,36 +61,75 @@ namespace UATaRApi.Controllers
             {
                 _logger.LogError(ex.Message);
 
-                return BadRequest();
+                return Ok();
             }
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateSubject(SubjectViewModel subject)
         {
-            var map = _mapper.Map<Subject>(subject);
-            await _subjectService.CreateAsync(map);
+            try
+            {
+                var map = _mapper.Map<Subject>(subject);
+                await _subjectService.CreateAsync(map);
 
-            return Ok();
+                return Ok();
+            }
+            catch (ArgumentNullException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateSubject(SubjectViewModel subject)
         {
-            var map = _mapper.Map<Subject>(subject);
-            await _subjectService.UpdateAsync(map);
+            try
+            {
+                var map = _mapper.Map<Subject>(subject);
+                await _subjectService.UpdateAsync(map);
 
-            return Ok();
+                return Ok();
+            }
+            catch (ArgumentNullException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return BadRequest(ex.Message);
+            }
+            catch (NotFoundException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return Ok();
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSubject(int id)
         {
-            var data = await _subjectService.GetByIdAsync(id);
-            var map = _mapper.Map<Subject>(data);
-            await _subjectService.DeleteAsync(map);
+            try
+            {
+                var data = await _subjectService.GetByIdAsync(id);
+                var map = _mapper.Map<Subject>(data);
+                await _subjectService.DeleteAsync(map);
 
-            return Ok();
+                return Ok();
+            }
+            catch (ArgumentNullException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return BadRequest(ex.Message);
+            }
+            catch (NotFoundException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return Ok();
+            }
         }
     }
 }

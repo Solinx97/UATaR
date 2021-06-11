@@ -7,7 +7,7 @@ namespace UATaR.ViewModels
         public int Id { get; set; }
 
         [Display(Name = "Группа")]
-        [Required(ErrorMessage = "Required first name")]
+        [Required(ErrorMessage = "Поле 'Группа' обязательно для заполнения")]
         public string Name { get; set; }
     }
 }

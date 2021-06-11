@@ -79,6 +79,11 @@ namespace BusinessLayer.Services
 
         private async Task<int> CreateInternalAsync(LoadType item)
         {
+            if (string.IsNullOrEmpty(item.Name))
+            {
+                throw new ArgumentNullException(nameof(item.Name));
+            }
+
             await _loadTypeRepository.CreateAsync(_mapper.Map<LoadTypeDto>(item));
 
             var allData = await _loadTypeRepository.GetAllAsync();
@@ -104,6 +109,11 @@ namespace BusinessLayer.Services
             if (!allData.Any())
             {
                 throw new NotFoundException($"Collection entity {nameof(LoadType)} not found", nameof(allData));
+            }
+
+            if (string.IsNullOrEmpty(item.Name))
+            {
+                throw new ArgumentNullException(nameof(item.Name));
             }
 
             await _loadTypeRepository.UpdateAsync(_mapper.Map<LoadTypeDto>(item));

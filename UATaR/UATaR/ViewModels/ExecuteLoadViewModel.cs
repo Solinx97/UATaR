@@ -9,7 +9,7 @@ namespace UATaR.ViewModels
         public int LoadId { get; set; }
 
         [Display(Name = "Выполнено часов")]
-        [Required(ErrorMessage = "Required first name")]
+        [Required(ErrorMessage = "Поле 'Выполнено часов' обязательно для заполнения")]
         public double Hours { get; set; }
     }
 }

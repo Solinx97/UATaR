@@ -38,14 +38,25 @@ namespace UATaR.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public Task<IActionResult> CreateLoadType(LoadTypeViewModel loadType)
+        public async Task<IActionResult> CreateLoadType(LoadTypeViewModel loadType)
         {
             if (!ModelState.IsValid)
             {
-                return CreateLoadType(loadType);
+                return View(loadType);
             }
 
-            return CreateLoadTypeInternal(loadType);
+            var result = await _client.PostAsync(ApiControllerName, loadType);
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                return RedirectToAction(nameof(ShowLoadTypes));
+            }
+            else
+            {
+                var exMessage = await result.Content.ReadAsStringAsync();
+                ModelState.AddModelError(string.Empty, exMessage);
+
+                return View();
+            }
         }
 
         [HttpGet]
@@ -61,6 +72,11 @@ namespace UATaR.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateLoadType(LoadTypeViewModel loadType)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(loadType);
+            }
+
             var result = await _client.PutAsync(ApiControllerName, loadType);
             if (result.StatusCode == HttpStatusCode.OK)
             {
@@ -71,7 +87,7 @@ namespace UATaR.Controllers
                 var exMessage = await result.Content.ReadAsStringAsync();
                 ModelState.AddModelError(string.Empty, exMessage);
 
-                return await UpdateLoadType(loadType);
+                return View(loadType);
             }
         }
 
@@ -81,22 +97,6 @@ namespace UATaR.Controllers
             await _client.DeleteAsync($"{ApiControllerName}/{id}");
 
             return RedirectToAction(nameof(ShowLoadTypes));
-        }
-
-        private async Task<IActionResult> CreateLoadTypeInternal(LoadTypeViewModel loadType)
-        {
-            var result = await _client.PostAsync(ApiControllerName, loadType);
-            if (result.StatusCode == HttpStatusCode.OK)
-            {
-                return RedirectToAction(nameof(ShowLoadTypes));
-            }
-            else
-            {
-                var exMessage = await result.Content.ReadAsStringAsync();
-                ModelState.AddModelError(string.Empty, exMessage);
-
-                return CreateLoadType();
-            }
         }
     }
 }

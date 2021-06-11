@@ -31,12 +31,6 @@ namespace UATaR.Controllers
             return View(content);
         }
 
-        [HttpGet]
-        public IActionResult CreateExecuteLoad()
-        {
-            return View();
-        }
-
         [HttpPost]
         public async Task<IActionResult> CreateExecuteLoad(int loadId, double hours)
         {
@@ -54,51 +48,27 @@ namespace UATaR.Controllers
             else
             {
                 var exMessage = await result.Content.ReadAsStringAsync();
-                ModelState.AddModelError(string.Empty, exMessage);
+                ModelState.AddModelError("Hours", exMessage);
 
-                return CreateExecuteLoad();
+                return RedirectToAction(nameof(ShowExecuteLoads));
             }
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> UpdateExecuteLoad(int id)
-        {
-            var result = await _client.GetAsync($"{ApiControllerName}/{id}");
-            var data = await _client.ReadAsJsonAsync<ExecuteLoadViewModel>(result);
-
-            return View(data);
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateExecuteLoad(int excecuteLoadId, int loadId, double hours)
+        public async Task<IActionResult> UpdateExecuteLoad(ExecuteLoadViewModel executeLoad)
         {
-            var executeLoad = new ExecuteLoadViewModel
-            {
-                Id = excecuteLoadId,
-                LoadId = loadId,
-                Hours = hours,
-            };
-
             var result = await _client.PutAsync(ApiControllerName, executeLoad);
             if (result.StatusCode == HttpStatusCode.OK)
             {
-                return RedirectToAction(nameof(ShowExecuteLoads));
+                return PartialView();
             }
             else
             {
-                var exMessage = await result.Content.ReadAsStringAsync();
-                ModelState.AddModelError(string.Empty, exMessage);
+                var errorMessage = await result.Content.ReadAsStringAsync();
+                ModelState.AddModelError(nameof(executeLoad.Hours), errorMessage);
 
-                return await UpdateExecuteLoad(excecuteLoadId, loadId, hours);
+                return PartialView(executeLoad);
             }
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> DeleteExecuteLoad(int id)
-        {
-            await _client.DeleteAsync($"{ApiControllerName}/{id}");
-
-            return RedirectToAction(nameof(ShowExecuteLoads));
         }
     }
 }

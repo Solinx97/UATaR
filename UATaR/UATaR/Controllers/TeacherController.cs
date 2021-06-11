@@ -38,14 +38,25 @@ namespace UATaR.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public Task<IActionResult> CreateTeacher(TeacherViewModel teacher)
+        public async Task<IActionResult> CreateTeacher(TeacherViewModel teacher)
         {
             if (!ModelState.IsValid)
             {
-                return CreateTeacher(teacher);
+                return View(teacher);
             }
 
-            return CreateTeacherInternal(teacher);
+            var result = await _client.PostAsync(ApiControllerName, teacher);
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                return RedirectToAction(nameof(ShowTeachers));
+            }
+            else
+            {
+                var exMessage = await result.Content.ReadAsStringAsync();
+                ModelState.AddModelError(string.Empty, exMessage);
+
+                return View();
+            }
         }
 
         [HttpGet]
@@ -61,6 +72,11 @@ namespace UATaR.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateTeacher(TeacherViewModel teacher)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(teacher);
+            }
+
             var result = await _client.PutAsync(ApiControllerName, teacher);
             if (result.StatusCode == HttpStatusCode.OK)
             {
@@ -81,22 +97,6 @@ namespace UATaR.Controllers
             await _client.DeleteAsync($"{ApiControllerName}/{id}");
 
             return RedirectToAction(nameof(ShowTeachers));
-        }
-
-        private async Task<IActionResult> CreateTeacherInternal(TeacherViewModel teacher)
-        {
-            var result = await _client.PostAsync(ApiControllerName, teacher);
-            if (result.StatusCode == HttpStatusCode.OK)
-            {
-                return RedirectToAction(nameof(ShowTeachers));
-            }
-            else
-            {
-                var exMessage = await result.Content.ReadAsStringAsync();
-                ModelState.AddModelError(string.Empty, exMessage);
-
-                return CreateTeacher();
-            }
         }
     }
 }

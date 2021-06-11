@@ -16,8 +16,8 @@
                     <div>
                         <label asp-for="Hours"></label>
                         <input class="form-control" type="number" asp-for="Hours" />
+                        <span asp-validation-for="Hours"></span>
                     </div>
-                    <span asp-validation-for="Hours" />
                 </div>
                 @await Component.InvokeAsync("GetSubjects")
                 @await Component.InvokeAsync("GetTeachers")

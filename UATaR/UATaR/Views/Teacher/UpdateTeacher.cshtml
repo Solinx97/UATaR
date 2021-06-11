@@ -6,7 +6,7 @@
 
 @await Html.PartialAsync("~/Views/_Directories.cshtml")
 <div class="flex-row__space-between">
-    <h5 style="margin: 2vw;">Обновление преподавателя</h5>
+    <h5 style="margin: 2vw;">Обновление данных преподавателя</h5>
 </div>
 <div style="width: 30vw; margin: 3vw;">
     <div class="form-group">
@@ -18,22 +18,23 @@
                     <div>
                         <label asp-for="FullName"></label>
                         <input class="form-control" type="text" asp-for="FullName" />
+                        <span style="color: sandybrown;" asp-validation-for="FullName"></span>
                     </div>
-                    <span asp-validation-for="FullName" />
                 </div>
                 <div class="flex-column">
                     <div>
                         <label asp-for="Position"></label>
                         <input class="form-control" type="text" asp-for="Position" />
+                        <span style="color: sandybrown;" asp-validation-for="Position"></span>
                     </div>
-                    <span asp-validation-for="Position" />
                 </div>
                 <div class="flex-column">
                     <div>
                         <label asp-for="Education"></label>
                         <input class="form-control" type="text" asp-for="Education" />
+                        <span style="color: sandybrown;" asp-validation-for="Education"></span>
                     </div>
-                    <span asp-validation-for="Education" />
+
                 </div>
                 <input type="submit" class="btn btn-success" style="margin: 1vw;" value="Обновить" />
             </div>

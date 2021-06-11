@@ -38,14 +38,25 @@ namespace UATaR.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public Task<IActionResult> CreateSpeciality(SpecialityViewModel speciality)
+        public async Task<IActionResult> CreateSpeciality(SpecialityViewModel speciality)
         {
             if (!ModelState.IsValid)
             {
-                return CreateSpeciality(speciality);
+                return View(speciality);
             }
 
-            return CreateSpecialityInternal(speciality);
+            var result = await _client.PostAsync(ApiControllerName, speciality);
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                return RedirectToAction(nameof(ShowSpecialities));
+            }
+            else
+            {
+                var exMessage = await result.Content.ReadAsStringAsync();
+                ModelState.AddModelError(string.Empty, exMessage);
+
+                return View();
+            }
         }
 
         [HttpGet]
@@ -61,6 +72,11 @@ namespace UATaR.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateSpeciality(SpecialityViewModel speciality)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(speciality);
+            }
+
             var result = await _client.PutAsync(ApiControllerName, speciality);
             if (result.StatusCode == HttpStatusCode.OK)
             {
@@ -71,7 +87,7 @@ namespace UATaR.Controllers
                 var exMessage = await result.Content.ReadAsStringAsync();
                 ModelState.AddModelError(string.Empty, exMessage);
 
-                return await UpdateSpeciality(speciality);
+                return View(speciality);
             }
         }
 
@@ -81,22 +97,6 @@ namespace UATaR.Controllers
             await _client.DeleteAsync($"{ApiControllerName}/{id}");
 
             return RedirectToAction(nameof(ShowSpecialities));
-        }
-
-        private async Task<IActionResult> CreateSpecialityInternal(SpecialityViewModel speciality)
-        {
-            var result = await _client.PostAsync(ApiControllerName, speciality);
-            if (result.StatusCode == HttpStatusCode.OK)
-            {
-                return RedirectToAction(nameof(ShowSpecialities));
-            }
-            else
-            {
-                var exMessage = await result.Content.ReadAsStringAsync();
-                ModelState.AddModelError(string.Empty, exMessage);
-
-                return CreateSpeciality();
-            }
         }
     }
 }

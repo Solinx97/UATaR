@@ -17,8 +17,8 @@
                     <div>
                         <label asp-for="Name"></label>
                         <input class="form-control" type="text" asp-for="Name" />
+                        <span style="color: sandybrown;" asp-validation-for="Name"></span>
                     </div>
-                    <span asp-validation-for="Name" />
                 </div>
                 <input type="submit" class="btn btn-success" style="margin: 1vw;" value="Создать" />
             </div>

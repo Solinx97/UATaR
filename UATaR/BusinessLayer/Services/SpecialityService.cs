@@ -79,6 +79,11 @@ namespace BusinessLayer.Services
 
         private async Task<int> CreateInternalAsync(Speciality item)
         {
+            if (string.IsNullOrEmpty(item.Name))
+            {
+                throw new ArgumentNullException(nameof(item.Name));
+            }
+
             await _specialityRepository.CreateAsync(_mapper.Map<SpecialityDto>(item));
 
             var allData = await _specialityRepository.GetAllAsync();
@@ -104,6 +109,11 @@ namespace BusinessLayer.Services
             if (!allData.Any())
             {
                 throw new NotFoundException($"Collection entity {nameof(Speciality)} not found", nameof(allData));
+            }
+
+            if (string.IsNullOrEmpty(item.Name))
+            {
+                throw new ArgumentNullException(nameof(item.Name));
             }
 
             await _specialityRepository.UpdateAsync(_mapper.Map<SpecialityDto>(item));

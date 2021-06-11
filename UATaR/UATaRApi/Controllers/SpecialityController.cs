@@ -4,6 +4,7 @@ using BusinessLayer.Exceptions;
 using BusinessLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UATaRApi.ViewModels;
@@ -60,36 +61,75 @@ namespace UATaRApi.Controllers
             {
                 _logger.LogError(ex.Message);
 
-                return BadRequest();
+                return Ok();
             }
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateSpeciality(SpecialityViewModel speciality)
         {
-            var map = _mapper.Map<Speciality>(speciality);
-            await _specialityService.CreateAsync(map);
+            try
+            {
+                var map = _mapper.Map<Speciality>(speciality);
+                await _specialityService.CreateAsync(map);
 
-            return Ok();
+                return Ok();
+            }
+            catch (ArgumentNullException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateSpeciality(SpecialityViewModel speciality)
         {
-            var map = _mapper.Map<Speciality>(speciality);
-            await _specialityService.UpdateAsync(map);
+            try
+            {
+                var map = _mapper.Map<Speciality>(speciality);
+                await _specialityService.UpdateAsync(map);
 
-            return Ok();
+                return Ok();
+            }
+            catch (ArgumentNullException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return BadRequest(ex.Message);
+            }
+            catch (NotFoundException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return Ok();
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSpeciality(int id)
         {
-            var data = await _specialityService.GetByIdAsync(id);
-            var map = _mapper.Map<Speciality>(data);
-            await _specialityService.DeleteAsync(map);
+            try
+            {
+                var data = await _specialityService.GetByIdAsync(id);
+                var map = _mapper.Map<Speciality>(data);
+                await _specialityService.DeleteAsync(map);
 
-            return Ok();
+                return Ok();
+            }
+            catch (ArgumentNullException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return BadRequest(ex.Message);
+            }
+            catch (NotFoundException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return Ok(ex.Message);
+            }
         }
     }
 }

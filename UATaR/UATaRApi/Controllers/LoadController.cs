@@ -4,6 +4,7 @@ using BusinessLayer.Exceptions;
 using BusinessLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -62,7 +63,7 @@ namespace UATaRApi.Controllers
             {
                 _logger.LogError(ex.Message);
 
-                return BadRequest();
+                return Ok();
             }
         }
 
@@ -80,36 +81,87 @@ namespace UATaRApi.Controllers
             {
                 _logger.LogError(ex.Message);
 
-                return BadRequest();
+                return Ok();
             }
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateLoad(LoadViewModel load)
         {
-            var map = _mapper.Map<Load>(load);
-            await _loadService.CreateAsync(map);
+            try
+            {
+                var map = _mapper.Map<Load>(load);
+                await _loadService.CreateAsync(map);
 
-            return Ok();
+                return Ok();
+            }
+            catch (ArgumentNullException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return BadRequest(ex.Message);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateLoad(LoadViewModel load)
         {
-            var map = _mapper.Map<Load>(load);
-            await _loadService.UpdateAsync(map);
+            try
+            {
+                var map = _mapper.Map<Load>(load);
+                await _loadService.UpdateAsync(map);
 
-            return Ok();
+                return Ok();
+            }
+            catch (ArgumentNullException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return BadRequest(ex.Message);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return BadRequest(ex.Message);
+            }
+            catch (NotFoundException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return Ok(ex.Message);
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLoad(int id)
         {
-            var data = await _loadService.GetByIdAsync(id);
-            var map = _mapper.Map<Load>(data);
-            await _loadService.DeleteAsync(map);
+            try
+            {
+                var data = await _loadService.GetByIdAsync(id);
+                var map = _mapper.Map<Load>(data);
+                await _loadService.DeleteAsync(map);
 
-            return Ok();
+                return Ok();
+            }
+            catch (ArgumentNullException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return BadRequest(ex.Message);
+            }
+            catch (NotFoundException ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return Ok(ex.Message);
+            }
         }
     }
 }

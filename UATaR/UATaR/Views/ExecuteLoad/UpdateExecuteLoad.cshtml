@@ -1,36 +1,3 @@
 ﻿@model ExecuteLoadViewModel
 
-@{
-    ViewData["Title"] = "Обновление нагрузки";
-}
-
-@await Html.PartialAsync("~/Views/_Directories.cshtml")
-<div class="flex-row__space-between">
-    <h5 style="margin: 2vw;">Обновление нагрузки</h5>
-</div>
-<div style="width: 30vw; margin: 3vw;">
-    <div class="form-group">
-        <form asp-action="UpdateExecuteLoad" asp-controller="ExecuteLoad" asp-antiforgery="true">
-            <input type="hidden" name="Id" value="@Model.Id">
-            <div>
-                <div class="validation" asp-validation-summary="ModelOnly" />
-                @await Component.InvokeAsync("GetLoads")
-                <div class="flex-column">
-                    <div class="flex-row__space-between">
-                        <label asp-for="Hours"></label>
-                        <input class="flex-row__space-between" type="number" asp-for="Hours" />
-                    </div>
-                    <span asp-validation-for="Hours" />
-                </div>
-                <input type="submit" class="btn btn-success" style="margin: 1vw;" value="Обновить" />
-            </div>
-        </form>
-        <form method="get" asp-action="ShowExecuteLoads" asp-controller="ExecuteLoad" asp-antiforgery="false">
-            <input type="submit" class="btn btn-secondary" style="margin: 1vw;" value="Отмена" />
-        </form>
-    </div>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
-}
+<span style="color: sandybrown;" asp-validation-for="Hours"></span>

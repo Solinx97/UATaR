@@ -38,14 +38,25 @@ namespace UATaR.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public Task<IActionResult> CreateSubject(SubjectViewModel subject)
+        public async Task<IActionResult> CreateSubject(SubjectViewModel subject)
         {
             if (!ModelState.IsValid)
             {
-                return CreateSubject(subject);
+                return View(subject);
             }
 
-            return CreateSubjectInternal(subject);
+            var result = await _client.PostAsync(ApiControllerName, subject);
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                return RedirectToAction(nameof(ShowSubjects));
+            }
+            else
+            {
+                var exMessage = await result.Content.ReadAsStringAsync();
+                ModelState.AddModelError(string.Empty, exMessage);
+
+                return View();
+            }
         }
 
         [HttpGet]
@@ -61,6 +72,11 @@ namespace UATaR.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateSubject(SubjectViewModel subject)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(subject);
+            }
+
             var result = await _client.PutAsync(ApiControllerName, subject);
             if (result.StatusCode == HttpStatusCode.OK)
             {
@@ -81,22 +97,6 @@ namespace UATaR.Controllers
             await _client.DeleteAsync($"{ApiControllerName}/{id}");
 
             return RedirectToAction(nameof(ShowSubjects));
-        }
-
-        private async Task<IActionResult> CreateSubjectInternal(SubjectViewModel subject)
-        {
-            var result = await _client.PostAsync(ApiControllerName, subject);
-            if (result.StatusCode == HttpStatusCode.OK)
-            {
-                return RedirectToAction(nameof(ShowSubjects));
-            }
-            else
-            {
-                var exMessage = await result.Content.ReadAsStringAsync();
-                ModelState.AddModelError(string.Empty, exMessage);
-
-                return CreateSubject();
-            }
         }
     }
 }

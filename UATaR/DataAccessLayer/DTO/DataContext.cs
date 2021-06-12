@@ -15,8 +15,6 @@ namespace DataAccessLayer.DTO
 
         public virtual DbSet<SubjectDto> Subject { get; set; }
 
-        public virtual DbSet<SpecialityDto> Speciality { get; set; }
-
         public virtual DbSet<LoadTypeDto> LoadType { get; set; }
 
         public virtual DbSet<LoadDto> Load { get; set; }

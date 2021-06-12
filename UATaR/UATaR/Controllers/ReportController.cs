@@ -61,8 +61,6 @@ namespace UATaR.Controllers
             FourthPart(document, sumHours);
             FiftyPart(document);
 
-            document.Save();
-
             return PartialView();
         }
 

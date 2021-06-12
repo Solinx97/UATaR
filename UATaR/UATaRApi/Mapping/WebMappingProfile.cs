@@ -11,7 +11,6 @@ namespace UATaRApi.Mapping
             CreateMap<ExecuteLoadViewModel, ExecuteLoad>().ReverseMap();
             CreateMap<LoadTypeViewModel, LoadType>().ReverseMap();
             CreateMap<LoadViewModel, Load>().ReverseMap();
-            CreateMap<SpecialityViewModel, Speciality>().ReverseMap();
             CreateMap<SubjectViewModel, Subject>().ReverseMap();
             CreateMap<TeacherViewModel, Teacher>().ReverseMap();
             CreateMap<GroupViewModel, Group>().ReverseMap();

@@ -22,15 +22,18 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/Load/ShowLoads">Нагрузки</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/ExecuteLoad/ShowExecuteLoads">Выполнение нагрузки</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Report/ShowReports">Отчеты</a>
-                        </li>
-                        <li class="form-inline nav-item">
-                            <a class="nav-link" href="/Account/Logout">Выход</a>
-                        </li>
+                        @if (User.IsInRole(RoleNames.MethodologistDepartment))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/ExecuteLoad/ShowExecuteLoads">Выполнение нагрузки</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Report/ShowReports">Отчеты</a>
+                            </li>
+                            <li class="form-inline nav-item">
+                                <a class="nav-link" href="/Account/Logout">Выход</a>
+                            </li>
+                        }
                     }
                     else
                     {

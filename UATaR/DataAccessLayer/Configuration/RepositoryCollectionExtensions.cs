@@ -15,7 +15,6 @@ namespace DataAccessLayer.Configuration
             services.AddDbContext<DataContext>(options => options.UseSqlServer(connection));
             services.AddScoped<IGenericRepository<TeacherDto, int>, GenericRepository<TeacherDto>>();
             services.AddScoped<IGenericRepository<SubjectDto, int>, GenericRepository<SubjectDto>>();
-            services.AddScoped<IGenericRepository<SpecialityDto, int>, GenericRepository<SpecialityDto>>();
             services.AddScoped<IGenericRepository<LoadTypeDto, int>, GenericRepository<LoadTypeDto>>();
             services.AddScoped<IGenericRepository<LoadDto, int>, GenericRepository<LoadDto>>();
             services.AddScoped<IGenericRepository<ExecuteLoadDto, int>, GenericRepository<ExecuteLoadDto>>();

@@ -50,14 +50,24 @@ namespace UATaR.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return Task.Run(Login);
+                return View(model);
             }
 
-            return LoginInternal(model);
+            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("ShowLoadTypes", "LoadType");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Invalid login/password");
+
+                return View(model);
+            }
         }
 
         [HttpGet]
@@ -104,21 +114,6 @@ namespace UATaR.Controllers
             }
 
             return RedirectToAction(nameof(Login));
-        }
-
-        private async Task<IActionResult> LoginInternal(LoginViewModel model)
-        {
-            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
-            if (result.Succeeded)
-            {
-                return RedirectToAction("ShowLoadTypes", "LoadType");
-            }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Invalid login/password");
-
-                return Login();
-            }
         }
 
         private async Task<IActionResult> EditProfileInternal(UserDto model)

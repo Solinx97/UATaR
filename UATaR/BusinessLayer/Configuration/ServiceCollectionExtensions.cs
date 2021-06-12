@@ -15,7 +15,6 @@ namespace BusinessLayer.Configuration
 
             services.AddScoped<IService<Teacher, int>, TeacherService>();
             services.AddScoped<IService<Subject, int>, SubjectService>();
-            services.AddScoped<IService<Speciality, int>, SpecialityService>();
             services.AddScoped<IService<LoadType, int>, LoadTypeService>();
             services.AddScoped<IService<Load, int>, LoadService>();
             services.AddScoped<IService<ExecuteLoad, int>, ExecuteLoadService>();
